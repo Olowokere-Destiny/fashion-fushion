@@ -1,0 +1,16 @@
+.hero-bg {
+    background-image: url("../assets/images/hero-image.svg");
+    height: 33rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 480px) {
+    .hero-bg {
+        background-image: url("../assets/images/hero-image.svg");
+        height: 33rem;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 60%;
+    }
+}

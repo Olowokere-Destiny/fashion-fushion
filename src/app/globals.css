@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.padding {
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+}
+
+@media screen and (min-width: 768px) {
+  .padding {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .padding {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
+}
+
+.text-blue {
+  color: #024e82;
+}
+.bg-blue {
+  background-color: #024e82;
+}

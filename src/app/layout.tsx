@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
+import NavBar from "@/components/nav/NavBar";
 
-const lato = Lato({ subsets: ["latin"], weight: ["100", "300", "400", "700", "900","100", "300", "400", "700", "900"] });
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"],
+});
 
 export const metadata: Metadata = {
-  title: "NorthSide",
-  description: "NorthSide clothing e-commerce website built with NextJS.",
+  title: "FashionFusion",
+  description: "FashionFusion clothing e-commerce website built with NextJS.",
 };
 
 export default function RootLayout({
@@ -16,7 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={lato.className}>{children}</body>
+      <body className={lato.className}>
+        <NavBar />
+        {children}
+      </body>
     </html>
   );
 }
