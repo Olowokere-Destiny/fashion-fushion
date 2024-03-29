@@ -2,7 +2,7 @@ import { arimo } from "@/utils/fontExports"
 
 function Footer() {
   return (
-    <div className="bg-[#fbfbfb] padding py-6 grid gap-y-6 grid-cols-2 md:flex justify-between">
+    <div className="bg-[#fbfbfb] padding py-10 grid gap-y-6 grid-cols-2 md:flex justify-between overflow-hidden mt-6">
         <div>
             <h2 className={`${arimo.className} font-[700] text-[0.7rem]`}>COMPANY INFO</h2>
             <div className="mt-4 text-[0.9rem] space-y-1">
