@@ -9,7 +9,7 @@ interface Props {
 
 function DiscoverCard({ image, text, price }: Props) {
   return (
-    <div className="my-2">
+    <div className="my-2 cursor-pointer group">
       <div className="lg:h-[270px] xlg:h-[300px] overflow-hidden">
         <Image
           width={100}
@@ -22,7 +22,7 @@ function DiscoverCard({ image, text, price }: Props) {
       </div>
       <div className="mt-2">
         <p
-          className={`${nunito.className} text-center font-semibold`}
+          className={`${nunito.className} text-center font-semibold group-hover:text-[#024e82]`}
         >
           {text}
         </p>

@@ -9,6 +9,7 @@ import james from "../../assets/images/james.png";
 import quotes from "../../assets/icons/quotes.svg";
 import "./styles.css";
 import { arimo, nunito } from "@/utils/fontExports";
+import { Metadata } from "next";
 interface CardProps {
   image: StaticImageData;
   name: string;
@@ -65,11 +66,17 @@ function Testimonial({ comment, name, image }: TestimonialProps) {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "About FashionFusion",
+};
+
 function About() {
   return (
     <div>
       {/* Hero section */}
-      <div className="hero-bg relative">
+      <div className="about-hero-bg relative">
         <h1 className="absolute text-white bottom-5 left-[0.8rem] md:left-[3rem] lg:left-[5rem] text-[1.5rem] md:text-[2.3rem]">
           ABOUT FASHIONFUSION
         </h1>

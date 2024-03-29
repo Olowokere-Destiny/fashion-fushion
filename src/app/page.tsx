@@ -18,6 +18,13 @@ import return30 from "../assets/icons/30return.svg";
 import "./styles.css";
 import Image from "next/image";
 import { nunito } from "@/utils/fontExports";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "FashionFusion home page",
+};
+
 export default function Home() {
   return (
     <div>
@@ -147,7 +154,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer">SHOP NOW</div>
+      <div className="my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer">
+        SHOP NOW
+      </div>
     </div>
   );
 }
