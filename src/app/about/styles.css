@@ -1,0 +1,12 @@
+.hero-bg {
+    height: 15rem;
+    background-image: url("../../assets/images/about-hero-bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+@media screen and (min-width: 768px) {
+    .hero-bg {
+        height: 20rem;
+    }
+}
