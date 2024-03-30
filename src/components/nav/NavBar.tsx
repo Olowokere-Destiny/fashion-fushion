@@ -10,18 +10,29 @@ import Link from "next/link";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarContent from "./SidebarContent";
 import { arimo } from "@/utils/fontExports";
+import { FiSearch } from "react-icons/fi";
+import SearchOverlay from "../SearchOverlay";
 
 function NavBar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
+  const toggleSearchOpen = () => {
+    setIsSearchOpen(false);
+  };
+  useEffect(() => {
+    document.body.style.overflowY = isSearchOpen ? "hidden" : "scroll";
+  }, [isSearchOpen]);
+
   return (
     <>
+      <SearchOverlay open={isSearchOpen} toggle={toggleSearchOpen} />
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}
@@ -76,14 +87,18 @@ function NavBar() {
           </div>
         </div>
         <div className="flex items-center gap-x-4">
+          <FiSearch
+            onClick={() => setIsSearchOpen(true)}
+            className="cursor-pointer w-6 h-6"
+          />
           <Image
             src={bag}
             width={100}
             height={100}
             alt="bag"
-            className="w-5 md:w-6"
+            className="w-5 cursor-pointer"
           />
-          <RiAccountCircleLine className="w-6 h-6 md:w-7 md:h-7" />
+          <RiAccountCircleLine className="cursor-pointer w-6 h-6" />
         </div>
       </div>
     </>
