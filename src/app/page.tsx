@@ -15,11 +15,15 @@ import freeShipping from "../assets/icons/free-shipping.svg";
 import support247 from "../assets/icons/support247.svg";
 import fingerPrint from "../assets/icons/fingerprint.svg";
 import return30 from "../assets/icons/30return.svg";
+import adidas from "../assets/images/adidas.png";
+import northFace from "../assets/images/north-face.png";
+import hilfiger from "../assets/images/hilfiger.png";
+import nike from "../assets/images/nike.png";
+
 import "./styles.css";
 import Image from "next/image";
 import { nunito } from "@/utils/fontExports";
 import { Metadata } from "next";
-import SearchBox from "@/components/SearchBox";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -29,7 +33,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div>
-      <SearchBox />
       {/* Hero section */}
       <div className="hero-bg p-[5rem]">
         <div className="flex justify-between items-center w-full h-full">
@@ -153,6 +156,49 @@ export default function Home() {
             text="Pink Casual Shirt"
             price="$39.00"
           />
+        </div>
+      </div>
+
+      {/* Popular brands section */}
+      <div className="padding py-4">
+        <h1 className="text-[2rem] text-center font-[700] ">Trending Brands</h1>
+        <div className="my-6 grid grid-cols-2 place-items-center gap-4 md:flex md:items-center md:justify-between">
+          <div className="">
+            <Image
+              src={adidas}
+              alt="brand logo"
+              width={100}
+              height={100}
+              className="hover:opacity-70 transition-all"
+            />
+          </div>
+          <div className="">
+            <Image
+              src={hilfiger}
+              alt="brand logo"
+              width={100}
+              height={100}
+              className="hover:opacity-70 transition-all"
+            />
+          </div>
+          <div className="">
+            <Image
+              src={nike}
+              alt="brand logo"
+              width={100}
+              height={100}
+              className="hover:opacity-70 transition-all"
+            />
+          </div>
+          <div className="">
+            <Image
+              src={northFace}
+              alt="brand logo"
+              width={100}
+              height={100}
+              className="hover:opacity-70 transition-all"
+            />
+          </div>
         </div>
       </div>
 
