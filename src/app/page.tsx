@@ -19,6 +19,7 @@ import "./styles.css";
 import Image from "next/image";
 import { nunito } from "@/utils/fontExports";
 import { Metadata } from "next";
+import SearchBox from "@/components/SearchBox";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div>
+      <SearchBox />
       {/* Hero section */}
       <div className="hero-bg p-[5rem]">
         <div className="flex justify-between items-center w-full h-full">

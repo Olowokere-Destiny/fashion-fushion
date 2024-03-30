@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-
 function ContactForm() {
   const [sent, setSent] = useState(false);
   return (
@@ -41,12 +40,15 @@ function ContactForm() {
         </>
       ) : (
         <h1 className="text-[1.8rem] font-[600] mb-10 md:mb-0">
-        Message sent. We’ll contact you soon.
-      </h1>      )}
+          Message sent. We’ll contact you soon.
+        </h1>
+      )}
       <button
-        onClick={()=>setSent(true)}
+        onClick={() => setSent(true)}
         type="button"
-        className={`${sent && "hidden"} block my-8  px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white bg-blue w-max`}
+        className={`${
+          sent && "hidden"
+        } block my-8  px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white bg-blue w-max`}
       >
         SEND MESSAGE
       </button>
