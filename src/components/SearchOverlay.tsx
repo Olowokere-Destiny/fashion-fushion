@@ -10,11 +10,11 @@ function SearchOverlay({ open, toggle }: Props) {
     <div
       className={`${
         open ? "block" : "hidden"
-      } pt-10 w-full absolute bottom-0 h-screen z-50 padding bg-[#eeecec]`}
+      } pt-[5.2rem] md:pt-10 w-full absolute bottom-0 h-screen z-50 padding bg-[#eeecec]`}
     >
       <MdClose
         onClick={toggle}
-        className="cursor-pointer text-[1.5rem] absolute right-4 top-4 md:top-6 md:right-8"
+        className="cursor-pointer text-[1.5rem] absolute right-4 top-[3.7rem] md:top-6 md:right-8"
       />
       <SearchBox />
     </div>
