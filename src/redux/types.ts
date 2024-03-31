@@ -1,5 +1,5 @@
 // autocomplete types
-type SuggestionItem = {
+export type SuggestionItem = {
   numberOfResults: number;
   searchTerm: string;
 };

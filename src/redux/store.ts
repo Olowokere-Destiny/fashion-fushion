@@ -1,7 +1,8 @@
 "use client";
 import { configureStore } from "@reduxjs/toolkit";
-import bagState from "./slice/state";
+import bagState from "./slice/bagState";
 import { asosService } from "./fetchData/service";
+import globalState from "./slice/globalState";
 // import { persistReducer } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
 
@@ -18,7 +19,8 @@ import { asosService } from "./fetchData/service";
 
 const store = configureStore({
   reducer: {
-    state: bagState,
+    global: globalState,
+    bag: bagState,
     [asosService.reducerPath]: asosService.reducer,
   },
   middleware: (getDefaultMiddleware) =>
