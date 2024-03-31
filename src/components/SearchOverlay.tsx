@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import SearchBox from "./SearchBox";
 import { MdClose } from "react-icons/md";
-import { AutoComplete } from "@/redux/types";
+import { AutoComplete } from "@/utils/types";
 
 interface Props {
   open: boolean;

@@ -1,9 +1,9 @@
 "use client";
 import { GoArrowLeft } from "react-icons/go";
-import { RiAccountCircleLine } from "react-icons/ri";
+import { IoBagOutline } from "react-icons/io5";
+import { IoIosHeartEmpty } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import icon from "../../assets/icons/icon.svg";
-import bag from "../../assets/icons/bag.svg";
 import Image from "next/image";
 import navLinks from "@/utils/navlinks";
 import Link from "next/link";
@@ -90,15 +90,10 @@ function NavBar() {
           <FiSearch
             onClick={() => setIsSearchOpen(true)}
             className="cursor-pointer w-6 h-6"
+            title="Search"
           />
-          <Image
-            src={bag}
-            width={100}
-            height={100}
-            alt="bag"
-            className="w-5 cursor-pointer"
-          />
-          <RiAccountCircleLine className="cursor-pointer w-6 h-6" />
+          <IoBagOutline className="cursor-pointer w-6 h-6" title="Bag" />
+          <IoIosHeartEmpty className="cursor-pointer w-6 h-6" title="Favourites" />
         </div>
       </div>
     </>
