@@ -159,9 +159,9 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Popular brands section */}
+      {/* Trending brands section */}
       <div className="padding py-4">
-        <h1 className="text-[2rem] text-center font-[700] ">Trending Brands</h1>
+        <h1 className="text-[1.5rem] text-center font-[700] ">Trending Brands</h1>
         <div className="my-6 grid grid-cols-2 place-items-center gap-4 md:flex md:items-center md:justify-between">
           <div className="">
             <Image

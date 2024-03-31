@@ -26,3 +26,23 @@
 .bg-blue {
   background-color: #024e82;
 }
+
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  -webkit-appearance: none;
+}
+
+@media screen and (min-width: 768px) {
+  .no-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+}
+
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+  -webkit-appearance: none;
+  background-color: #024e82;
+  border-radius: 0.3rem;
+}
+
