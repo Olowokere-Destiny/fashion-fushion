@@ -13,15 +13,10 @@ export const asosService = createApi({
   }),
 
   endpoints: (builder) => ({
-    autoComplete: builder.query({
-      query: (body) => ({
-        url: "/products/auto-complete",
-        params: {
-          q: body
-        }
-      }),
+    search: builder.query({
+      query: (body:string) => `/products/search?q=${body}`,
     }),
   }),
 });
 
-export const { useAutoCompleteQuery } = asosService;
+export const { useSearchQuery } = asosService;

@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import SearchBox from "./SearchBox";
 import { MdClose } from "react-icons/md";
-import { AutoComplete } from "@/redux/types";
+import { AutoComplete } from "@/utils/types";
+import { useRouter } from "next/navigation";
 
 interface Props {
   open: boolean;
@@ -12,14 +13,31 @@ function SearchOverlay({ open, toggle }: Props) {
   const [search, setSearch] = useState({ searchTerm: "" });
   const [results, setResults] = useState<AutoComplete>();
   const [inputTrack, setInputTrack] = useState(0);
+  const [searchTrigger, setSearchTrigger] = useState(0);
+  const [url, setUrl] = useState<URL | undefined>();
+  const router = useRouter();
+  useEffect(() => {
+    const url = new URL(`${window?.location.href}`);
+    setUrl(url);
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("feature coming soon")
+  function toSearch(query: string) {
+    url?.searchParams.set("q", query);
+    router.push(url?.origin + "/search" + url?.search);
+  }
+
+  const handleSubmit = (e?: React.FormEvent, listItem?: string) => {
+    e?.preventDefault();
+    toggle();
+    if (listItem) {
+      toSearch(listItem);
+    } else {
+      toSearch(search.searchTerm);
+    }
   };
 
   const suggestions = results?.data.suggestionGroups[0].suggestions;
-  
+
   async function autoComplete(body: string) {
     const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/products/auto-complete?q=${body}`;
     const options = {
@@ -30,10 +48,10 @@ function SearchOverlay({ open, toggle }: Props) {
         "X-RapidAPI-Host": "asos-com1.p.rapidapi.com",
       },
     };
-    
+
     return fetch(url, options)
-    .then((response) => response.json())
-    .then((res) => setResults(res));
+      .then((response) => response.json())
+      .then((res) => setResults(res));
   }
 
   useEffect(() => {
@@ -60,12 +78,18 @@ function SearchOverlay({ open, toggle }: Props) {
         setSearch={setSearch}
         handleSubmit={handleSubmit}
         setInputTrack={setInputTrack}
+        searchTrigger={searchTrigger}
+        setSearchTrigger={setSearchTrigger}
       />
+
       <div className="h-5/6 mx-auto md:w-5/6 p-4 overflow-auto no-scrollbar">
         {Array.isArray(suggestions) &&
           suggestions.map((suggestion, i) => (
             <div
-              onClick={() => setSearch({ searchTerm: suggestion.searchTerm })}
+              onClick={() => {
+                setSearch({ searchTerm: suggestion.searchTerm });
+                handleSubmit(undefined, suggestion.searchTerm);
+              }}
               key={i}
               className="capitalize flex my-3 justify-between py-2 px-4 text-[1rem] hover:bg-gray-100 cursor-pointer rounded-md"
             >

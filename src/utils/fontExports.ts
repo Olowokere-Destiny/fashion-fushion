@@ -1,4 +1,4 @@
-import { Arimo, Nunito } from "next/font/google";
+import { Arimo, Nunito, Titillium_Web } from "next/font/google";
 const arimo = Arimo({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -7,5 +7,9 @@ const nunito = Nunito({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "300", "700"],
 });
+const titillium = Titillium_Web({
+  subsets: ["latin", ],
+  weight: ["300", "200", "400", "600", "700"],
+});
 
-export { arimo, nunito };
+export { arimo, nunito, titillium };
