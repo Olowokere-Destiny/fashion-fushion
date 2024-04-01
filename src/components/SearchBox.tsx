@@ -5,8 +5,10 @@ interface Props {
   setSearch: Dispatch<SetStateAction<{ searchTerm: string }>>;
   handleSubmit: (e: React.FormEvent) => void;
   setInputTrack: Dispatch<SetStateAction<number>>;
+  searchTrigger: number;
+  setSearchTrigger: Dispatch<SetStateAction<number>>;
 }
-function SearchBox({ search, setSearch, handleSubmit, setInputTrack }: Props) {
+function SearchBox({ search, setSearch, handleSubmit, setInputTrack, searchTrigger, setSearchTrigger }: Props) {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -34,7 +36,9 @@ function SearchBox({ search, setSearch, handleSubmit, setInputTrack }: Props) {
           placeholder="Search for items and brands"
         />
         <FiSearch
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => {handleSubmit(e)
+          setSearchTrigger(searchTrigger + 1)
+          }}
           className="cursor-pointer absolute right-4 top-3"
         />
       </form>

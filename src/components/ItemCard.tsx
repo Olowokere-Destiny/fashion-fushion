@@ -11,6 +11,7 @@ function ItemCard({
   price,
   imageUrl,
   additionalImageUrls,
+  prevPrice,
 }: ItemCardProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   function flickImage() {
@@ -35,12 +36,12 @@ function ItemCard({
           className="w-full h-full object-cover object-top"
           unoptimized
         />
-      <div className="absolute right-4 bottom-2 bg-white p-1 hover:shadow-md rounded-full">
-        <IoIosHeartEmpty
-          className="cursor-pointer w-5 h-5"
-          title="Add to Favourites"
-        />
-      </div>
+        <div className="absolute right-4 bottom-2 bg-white p-1 hover:shadow-md rounded-full">
+          <IoIosHeartEmpty
+            className="cursor-pointer w-5 h-5"
+            title="Add to Favourites"
+          />
+        </div>
       </div>
       <div className="mt-2 space-y-1">
         <div
@@ -51,7 +52,16 @@ function ItemCard({
         </div>
         <p className="uppercase text-[0.7rem] font-[400]">{brandName}</p>
       </div>
-      <p className={`${titillium.className} font-bold mt-2 text-blue`}>{price}</p>
+      <div className="flex items-center gap-x-2">
+      <p className={`${titillium.className} font-bold mt-2 text-blue`}>
+        {price}
+      </p>
+        {prevPrice && (
+          <p className={`${titillium.className} font-[600] mt-2 text-gray-500 line-through`}>
+            {prevPrice}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

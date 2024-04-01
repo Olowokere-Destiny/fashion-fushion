@@ -4,11 +4,9 @@ export type SuggestionItem = {
   searchTerm: string;
 };
 export interface AutoComplete {
-    data: {
-      suggestionGroups: [
-        {suggestions: SuggestionItem[]}
-      ]
-    };
+  data: {
+    suggestionGroups: [{ suggestions: SuggestionItem[] }];
+  };
 }
 // item card props and data props
 
@@ -19,10 +17,11 @@ export interface ItemCardProps {
   additionalImageUrls: string;
   id: number;
   url: string;
+  prevPrice: string;
   price: string;
 }
 
- export interface ItemProps {
+export interface ItemProps {
   name: string;
   brandName: string;
   imageUrl: string;
@@ -32,11 +31,14 @@ export interface ItemCardProps {
   price: {
     current: {
       text: string;
-    }
-  }
+    };
+    previous: {
+      text: string;
+    };
+  };
 }
 export interface ItemCardData {
   data: {
-    products: ItemProps[]
-  }
+    products: ItemProps[];
+  };
 }
