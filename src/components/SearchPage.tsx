@@ -14,7 +14,7 @@ function Searchpage() {
   }, [searchParams]);
 
   const [results, setResults] = useState<ItemProps[]>();
-  const { data, isLoading, isError } = useSearchQuery(queryString as string);
+  const { data, isFetching, isError } = useSearchQuery(queryString as string);
   const returnedData: ItemCardData = data;
   useEffect(() => {
     setResults(returnedData?.data.products);
@@ -24,7 +24,7 @@ function Searchpage() {
   return (
     <Suspense>
       <div className="padding">
-        {isLoading && (
+        {isFetching && (
           <div className="h-screen flex items-center justify-center">
             <ScaleLoader color={"#024e82"} />
           </div>

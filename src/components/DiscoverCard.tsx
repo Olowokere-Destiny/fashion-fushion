@@ -1,5 +1,8 @@
+"use client";
 import { nunito } from "@/utils/fontExports";
+0;
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface Props {
   image: StaticImageData;
@@ -9,7 +12,11 @@ interface Props {
 
 function DiscoverCard({ image, text, price }: Props) {
   return (
-    <div className="my-2 cursor-pointer group">
+    <Link
+      href={`/search?q=${text.replace(" ", "+")}`}
+      className="my-2 cursor-pointer group"
+      onClick={() => {}}
+    >
       <div className="lg:h-[270px] xlg:h-[300px] overflow-hidden">
         <Image
           width={100}
@@ -28,7 +35,7 @@ function DiscoverCard({ image, text, price }: Props) {
         </p>
         {price && <p className="text-blue text-center">{price}</p>}
       </div>
-    </div>
+    </Link>
   );
 }
 

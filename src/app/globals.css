@@ -19,6 +19,12 @@
     padding-left: 5rem;
   }
 }
+@media screen and (min-width: 1200px) {
+  .padding {
+    padding-right: 6rem;
+    padding-left: 6rem;
+  }
+}
 
 .text-blue {
   color: #024e82;
