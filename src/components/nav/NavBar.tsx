@@ -1,6 +1,6 @@
 "use client";
 import { GoArrowLeft } from "react-icons/go";
-import { IoBagOutline } from "react-icons/io5";
+import { IoBagOutline, IoSearchOutline } from "react-icons/io5";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import icon from "../../assets/icons/icon.svg";
@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import SidebarContent from "./SidebarContent";
 import { arimo } from "@/utils/fontExports";
-import { FiSearch } from "react-icons/fi";
 import SearchOverlay from "../SearchOverlay";
 
 function NavBar() {
@@ -87,7 +86,7 @@ function NavBar() {
           </div>
         </div>
         <div className="flex items-center gap-x-4">
-          <FiSearch
+          <IoSearchOutline
             onClick={() => setIsSearchOpen(true)}
             className="cursor-pointer w-6 h-6"
             title="Search"

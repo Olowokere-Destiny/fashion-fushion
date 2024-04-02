@@ -42,3 +42,34 @@ export interface ItemCardData {
     products: ItemProps[];
   };
 }
+
+export interface SingleProductData {
+  data: {
+    name: string;
+    brandName: string;
+    gender: string;
+    description: {
+      brandDescription: string;
+      productDescription: string;
+      careInfo: string;
+    };
+    images: {
+      alternateText: string;
+      url: string;
+    }[];
+    price: [
+      {
+        productPrice: {
+          current: {
+            text: string;
+          };
+          previous: {
+            text: string;
+          };
+        };
+      }
+    ];
+    variants: { size: string }[];
+  };
+  message: string;
+}

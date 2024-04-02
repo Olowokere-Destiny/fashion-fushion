@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { titillium } from "@/utils/fontExports";
 import { ItemCardProps } from "@/utils/types";
 import { IoIosHeartEmpty } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 function ItemCard({
   name,
@@ -12,8 +13,10 @@ function ItemCard({
   imageUrl,
   additionalImageUrls,
   prevPrice,
+  url
 }: ItemCardProps) {
   const imageRef = useRef<HTMLImageElement>(null);
+  const router = useRouter();
   function flickImage() {
     if (additionalImageUrls) {
       imageRef.current!.src = "https://" + additionalImageUrls;
@@ -22,8 +25,10 @@ function ItemCard({
   function flickImgPrev() {
     imageRef.current!.src = "https://" + imageUrl;
   }
+  const encodedUrl = encodeURIComponent(url)
+
   return (
-    <div className="cursor-pointer">
+    <div className="cursor-pointer" onClick={()=>router.push(`/search/${encodedUrl}`)}>
       <div className="h-[200px] xlg:h-[300px] relative">
         <Image
           src={"https://" + imageUrl}

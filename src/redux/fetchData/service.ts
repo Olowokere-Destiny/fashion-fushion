@@ -16,7 +16,10 @@ export const asosService = createApi({
     search: builder.query({
       query: (body:string) => `/products/search?q=${body}`,
     }),
+    getProduct: builder.query({
+      query: (body:string) => `/products/detail?url=${body}`,
+    }),
   }),
 });
 
-export const { useSearchQuery } = asosService;
+export const { useSearchQuery, useGetProductQuery } = asosService;
