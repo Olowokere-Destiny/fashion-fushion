@@ -13,7 +13,7 @@ function ItemCard({
   imageUrl,
   additionalImageUrls,
   prevPrice,
-  url
+  url,
 }: ItemCardProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const router = useRouter();
@@ -25,8 +25,8 @@ function ItemCard({
   function flickImgPrev() {
     imageRef.current!.src = "https://" + imageUrl;
   }
-  const encodedUrl = encodeURIComponent(url)
-
+  
+  const encodedUrl = encodeURIComponent(url);
   return (
     <div className="cursor-pointer" onClick={()=>router.push(`/search/${encodedUrl}`)}>
       <div className="h-[200px] xlg:h-[300px] relative">
@@ -58,11 +58,13 @@ function ItemCard({
         <p className="uppercase text-[0.7rem] font-[400]">{brandName}</p>
       </div>
       <div className="flex items-center gap-x-2">
-      <p className={`${titillium.className} font-bold mt-2 text-blue`}>
-        {price}
-      </p>
+        <p className={`${titillium.className} font-bold mt-2 text-blue`}>
+          {price}
+        </p>
         {prevPrice && (
-          <p className={`${titillium.className} font-[600] mt-2 text-gray-500 line-through`}>
+          <p
+            className={`${titillium.className} font-[600] mt-2 text-gray-500 line-through`}
+          >
             {prevPrice}
           </p>
         )}

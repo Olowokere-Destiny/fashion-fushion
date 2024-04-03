@@ -14,10 +14,10 @@ export interface ItemCardProps {
   name: string;
   brandName: string;
   imageUrl: string;
-  additionalImageUrls: string;
+  additionalImageUrls?: string;
   id: number;
   url: string;
-  prevPrice: string;
+  prevPrice: string | undefined;
   price: string;
 }
 
@@ -43,8 +43,27 @@ export interface ItemCardData {
   };
 }
 
+export interface SimilarDataProps {
+  data: {
+    brandName: string;
+    name: string;
+    id: number;
+    imageUrl: string;
+    price: {
+      current: {
+        text: string;
+      };
+      previous: {
+        text: string;
+      } | null;
+    };
+    url: string;
+  }[];
+}
+
 export interface SingleProductData {
   data: {
+    id: number;
     name: string;
     brandName: string;
     gender: string;

@@ -17,9 +17,17 @@ export const asosService = createApi({
       query: (body:string) => `/products/search?q=${body}`,
     }),
     getProduct: builder.query({
-      query: (body:string) => `/products/detail?url=${body}`,
+      query: (url:string) => ({
+        url: "/products/detail",
+        params: {
+          url
+        }
+      }),
+    }),
+    getSimilar: builder.query({
+      query: (id:string) => `products/list-similarities?id=${id}`,
     }),
   }),
 });
 
-export const { useSearchQuery, useGetProductQuery } = asosService;
+export const { useSearchQuery, useGetProductQuery, useGetSimilarQuery } = asosService;
