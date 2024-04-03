@@ -18,6 +18,7 @@ function Searchpage() {
   const returnedData: ItemCardData = data;
   useEffect(() => {
     setResults(returnedData?.data.products);
+    // setResults((prev) => [...prev!, ...returnedData?.data.products]);
   }, [returnedData?.data.products]);
 
   // let dummyArray = new Array(72).fill(0).map((_, i) => i + 1);
@@ -36,15 +37,13 @@ function Searchpage() {
             </p>
           </div>
         )}
-        {
-          Array.isArray(results) && results.length < 1 && (
-            <div className="h-screen flex items-center justify-center">
+        {Array.isArray(results) && results.length < 1 && (
+          <div className="h-screen flex items-center justify-center">
             <p className="text-center text-[1rem] font-semibold text-red-500">
               No products found.
             </p>
           </div>
-          )
-        }
+        )}
         {Array.isArray(results) && results.length > 0 && (
           <h1 className="my-6 text-center ">
             Search results for:{" "}
@@ -54,7 +53,8 @@ function Searchpage() {
           </h1>
         )}
         <div className="min-h-screen gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {Array.isArray(results) && results.length > 0 &&
+          {Array.isArray(results) &&
+            results.length > 0 &&
             results.map((item, i) => (
               <ItemCard
                 imageUrl={item.imageUrl}
