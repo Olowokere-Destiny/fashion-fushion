@@ -9,6 +9,7 @@ import { SimilarDataProps, SingleProductData } from "@/utils/types";
 import { ScaleLoader } from "react-spinners";
 import { IoBagOutline } from "react-icons/io5";
 import ItemCard from "@/components/ItemCard";
+import Slide from "@/components/react-slick/Slide";
 
 interface Props {
   params: {
@@ -51,17 +52,13 @@ function Product({ params: { product } }: Props) {
       {productData?.data && (
         <>
           <div className="flex flex-col md:flex-row gap-y-6 md:gap-y-0 md:gap-x-10 lg:gap-x-12 py-4">
-            <div className="w-4/6 max-h-[280px] overflow-hidden md:max-h-[350px] lg:max-w-[400px] md:w-[35vw] lg:w-[25vw] shrink-0 relative">
-              <div className="absolute font-bold rounded-sm px-1 top-2 left-2 text-[0.8rem] text-blue bg-blue-300">
-                {productData?.data?.gender}
-              </div>
-              <Image
-                src={productData?.data?.images[0]?.url}
-                alt={productData?.data?.images[0]?.alternateText}
-                width={100}
-                height={100}
-                className="w-full h-full object-cover"
-              />
+            <div className="relative">
+              {productData?.data?.gender && (
+                <div className="absolute z-[700] font-bold rounded-sm px-1 top-2 left-2 text-[0.8rem] text-blue bg-blue-300">
+                  {productData?.data?.gender}
+                </div>
+              )}
+              <Slide photos={productData?.data?.images} />
             </div>
             <div>
               <h1
@@ -107,7 +104,7 @@ function Product({ params: { product } }: Props) {
                 __html: productData?.data?.description?.brandDescription,
               }}
             ></p>
-            
+
             <p className="text-[0.8rem] mt-3">
               {`* ${productData?.data?.description?.careInfo}`}
             </p>

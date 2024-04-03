@@ -38,6 +38,8 @@ export interface ItemProps {
   };
 }
 export interface ItemCardData {
+  totalResultCount: number;
+  totalPages: number;
   data: {
     products: ItemProps[];
   };
