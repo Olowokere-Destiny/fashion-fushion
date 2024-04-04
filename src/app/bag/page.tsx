@@ -2,8 +2,9 @@
 import CartItemCard from "@/components/CartItemCard";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { clearItemsCart } from "@/redux/slice/cartState";
+import { AiOutlineDelete } from "react-icons/ai";
 
-function Cart() {
+function Bag() {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.state.cartState.items);
   return (
@@ -11,7 +12,7 @@ function Cart() {
       {cart?.length < 1 && (
         <div className="h-screen flex items-center justify-center">
           <p className="text-center text-[1rem] font-semibold text-blue">
-            Cart is empty.
+            Bag is empty.
           </p>
         </div>
       )}
@@ -33,13 +34,13 @@ function Cart() {
       {cart.length > 0 && (
         <div
           onClick={() => dispatch(clearItemsCart())}
-          className="mt-4 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+          className="mt-4 mx-auto p-4 md:p-5 rounded-full text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
         >
-          REMOVE ALL
+          <AiOutlineDelete className="w-5 h-5 md:w-6 md:h-6" />
         </div>
       )}
     </div>
   );
 }
 
-export default Cart;
+export default Bag;

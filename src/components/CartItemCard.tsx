@@ -31,7 +31,7 @@ function CartItemCard({ name, brandName, price, imageUrl, id, qty }: CartCardPro
         >
           <MdClose
             className="cursor-pointer w-5 h-5"
-            title="Remove from Cart"
+            title="Remove from Bag"
           />
         </div>
       </div>

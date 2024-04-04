@@ -1,9 +1,10 @@
 "use client";
 import ItemCard from "@/components/ItemCard";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { clearItems, removeItem } from "@/redux/slice/bagState";
+import { clearItems } from "@/redux/slice/bagState";
+import { AiOutlineDelete } from "react-icons/ai";
 
-function Bag() {
+function Favourites() {
   const dispatch = useAppDispatch();
   const bag = useAppSelector((state) => state.state.bagState.items);
   return (
@@ -31,15 +32,15 @@ function Bag() {
         </div>
       )}
       {bag.length > 0 && (
-        <div
-          onClick={() => dispatch(clearItems())}
-          className="mt-4 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
-        >
-          REMOVE ALL
-        </div>
+                <div
+                onClick={() => dispatch(clearItems())}
+                className="mt-4 mx-auto p-4 md:p-5 rounded-full text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+              >
+                <AiOutlineDelete className="w-5 h-5 md:w-6 md:h-6" />
+              </div>
       )}
     </div>
   );
 }
 
-export default Bag;
+export default Favourites;
