@@ -1,6 +1,7 @@
 "use client";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import bagState from "./slice/bagState";
+import cartState from "./slice/cartState";
 import { asosService } from "./fetchData/service";
 import {
   persistReducer,
@@ -19,15 +20,16 @@ const persistConfig = {
   storage,
 };
 
-const bagReducer = combineReducers({
+const rootReducer = combineReducers({
   bagState,
+  cartState
 });
 
-const persistedBagReducer = persistReducer(persistConfig, bagReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: {
-    bag: persistedBagReducer,
+    state: persistedReducer,
     [asosService.reducerPath]: asosService.reducer,
   },
   middleware: (getDefaultMiddleware) =>

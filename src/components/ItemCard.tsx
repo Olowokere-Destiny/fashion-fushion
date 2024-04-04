@@ -31,7 +31,7 @@ function ItemCard({
 
   const encodedUrl = encodeURIComponent(url);
   const dispatch = useAppDispatch();
-  const bag = useAppSelector((state) => state.bag.bagState.items);
+  const bag = useAppSelector((state) => state.state.bagState.items);
   const bagObj: ItemCardProps = {
     name,
     brandName,
@@ -49,7 +49,7 @@ function ItemCard({
     dispatch(removeItem(i));
   }
 
-  const check = (i: number) => {
+  const renderIcon = (i: number) => {
     const arr: boolean[] = [];
     bag.forEach((item) => {
       if (item.id === i) {
@@ -70,7 +70,7 @@ function ItemCard({
         >
           <IoIosHeart
             className="cursor-pointer w-5 h-5"
-            title="Add to Favourites"
+            title="Remove from Favourites"
           />
         </div>
       );
@@ -107,7 +107,7 @@ function ItemCard({
           className="w-full h-full object-cover object-top"
           unoptimized
         />
-        {check(id)}
+        {renderIcon(id)}
       </div>
       <div className="mt-2 space-y-1">
         <div

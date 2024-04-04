@@ -5,13 +5,13 @@ import { clearItems, removeItem } from "@/redux/slice/bagState";
 
 function Bag() {
   const dispatch = useAppDispatch();
-  const bag = useAppSelector((state) => state.bag.bagState.items);
+  const bag = useAppSelector((state) => state.state.bagState.items);
   return (
     <div className="min-h-screen padding py-8">
       {bag?.length < 1 && (
         <div className="h-screen flex items-center justify-center">
           <p className="text-center text-[1rem] font-semibold text-blue">
-            Bag is empty.
+            Favourites is empty.
           </p>
         </div>
       )}
