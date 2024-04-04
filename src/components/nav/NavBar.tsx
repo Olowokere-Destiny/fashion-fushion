@@ -91,8 +91,13 @@ function NavBar() {
             className="cursor-pointer w-6 h-6"
             title="Search"
           />
-          <IoBagOutline className="cursor-pointer w-6 h-6" title="Bag" />
-          <IoIosHeartEmpty className="cursor-pointer w-6 h-6" title="Favourites" />
+          <Link href="/bag" className="">
+            <IoBagOutline className={`cursor-pointer w-6 h-6  ${pathname === "/bag" ? "text-blue" : ""}`} title="Bag" />
+          </Link>
+          <IoIosHeartEmpty
+            className="cursor-pointer w-6 h-6"
+            title="Favourites"
+          />
         </div>
       </div>
     </>

@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { titillium } from "@/utils/fontExports";
 import { ItemCardProps } from "@/utils/types";
-import { IoIosHeartEmpty } from "react-icons/io";
+import { IoIosHeartEmpty, IoIosHeart } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import { addItem, removeItem } from "@/redux/slice/bagState";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 function ItemCard({
   name,
@@ -14,6 +16,7 @@ function ItemCard({
   additionalImageUrls,
   prevPrice,
   url,
+  id,
 }: ItemCardProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const router = useRouter();
@@ -25,10 +28,73 @@ function ItemCard({
   function flickImgPrev() {
     imageRef.current!.src = "https://" + imageUrl;
   }
-  
+
   const encodedUrl = encodeURIComponent(url);
+  const dispatch = useAppDispatch();
+  const bag = useAppSelector((state) => state.bag.bagState.items);
+  const bagObj: ItemCardProps = {
+    name,
+    brandName,
+    price,
+    imageUrl,
+    url,
+    id,
+  };
+  function addToFav(e: React.MouseEvent, i: number) {
+    e.stopPropagation();
+    dispatch(addItem(bagObj));
+  }
+  function removeFromFav(e: React.MouseEvent, i: number) {
+    e.stopPropagation();
+    dispatch(removeItem(i));
+  }
+
+  const check = (i: number) => {
+    const arr: boolean[] = [];
+    bag.forEach((item) => {
+      if (item.id === i) {
+        arr.push(true);
+      }
+    });
+    bag.forEach((item) => {
+      if (item.id !== i) {
+        arr.push(false);
+      }
+    });
+    const inBag = arr[0];
+    if (inBag) {
+      return (
+        <div
+          onClick={(e) => removeFromFav(e, id)}
+          className="absolute right-4 bottom-2 bg-white p-1 hover:shadow-md rounded-full"
+        >
+          <IoIosHeart
+            className="cursor-pointer w-5 h-5"
+            title="Add to Favourites"
+          />
+        </div>
+      );
+    }
+    if (!inBag) {
+      return (
+        <div
+          onClick={(e) => addToFav(e, id)}
+          className="absolute right-4 bottom-2 bg-white p-1 hover:shadow-md rounded-full"
+        >
+          <IoIosHeartEmpty
+            className="cursor-pointer w-5 h-5"
+            title="Add to Favourites"
+          />
+        </div>
+      );
+    }
+  };
+
   return (
-    <div className="cursor-pointer" onClick={()=>router.push(`/search/${encodedUrl}`)}>
+    <div
+      className="cursor-pointer"
+      onClick={() => router.push(`/search/${encodedUrl}`)}
+    >
       <div className="h-[200px] xlg:h-[300px] relative">
         <Image
           src={"https://" + imageUrl}
@@ -41,12 +107,7 @@ function ItemCard({
           className="w-full h-full object-cover object-top"
           unoptimized
         />
-        <div className="absolute right-4 bottom-2 bg-white p-1 hover:shadow-md rounded-full">
-          <IoIosHeartEmpty
-            className="cursor-pointer w-5 h-5"
-            title="Add to Favourites"
-          />
-        </div>
+        {check(id)}
       </div>
       <div className="mt-2 space-y-1">
         <div

@@ -83,13 +83,15 @@ function Product({ params: { product } }: Props) {
                   __html: productData?.data?.description?.productDescription,
                 }}
               ></p>
-              <select className="border-2 mx-auto md:mx-0 block border-[#024e82] p-2 cursor-pointer my-4 focus:outline-none">
-                {productData?.data?.variants?.map((size, i) => (
-                  <option value={size.size} key={i}>
-                    {size.size}
-                  </option>
-                ))}
-              </select>
+              {productData?.data?.variants?.length > 0 && (
+                <select className="border-2 mx-auto md:mx-0 block border-[#024e82] p-2 cursor-pointer my-4 focus:outline-none">
+                  {productData?.data?.variants?.map((size, i) => (
+                    <option value={size.size} key={i}>
+                      {size.size}
+                    </option>
+                  ))}
+                </select>
+              )}
 
               <div className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer">
                 <p>ADD TO CART</p>
@@ -104,12 +106,13 @@ function Product({ params: { product } }: Props) {
                 __html: productData?.data?.description?.brandDescription,
               }}
             ></p>
+            {productData?.data?.description?.careInfo !== undefined && (
+              <p className="text-[0.8rem] mt-3">
+                {`* ${productData?.data?.description?.careInfo}`}
+              </p>
+            )}
 
-            <p className="text-[0.8rem] mt-3">
-              {`* ${productData?.data?.description?.careInfo}`}
-            </p>
-
-            {similarData?.data && (
+            {similarData?.data && similarData?.data.length > 0 && (
               <div className="mt-10">
                 <h1 className="font-semibold text-[1.5rem] md:text-[1.7rem]">
                   You might also like

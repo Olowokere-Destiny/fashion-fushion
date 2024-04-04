@@ -1,30 +1,41 @@
 "use client";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import bagState from "./slice/bagState";
 import { asosService } from "./fetchData/service";
-import globalState from "./slice/globalState";
-// import { persistReducer } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-// const persistConfig = {
-//   key: "root",
-//   storage
-// }
+const persistConfig = {
+  timeout: 150,
+  key: "bag",
+  storage,
+};
 
-// const rootReducer = combineReducers({
-//     testSlice,
-// })
+const bagReducer = combineReducers({
+  bagState,
+});
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedBagReducer = persistReducer(persistConfig, bagReducer);
 
 const store = configureStore({
   reducer: {
-    global: globalState,
-    bag: bagState,
+    bag: persistedBagReducer,
     [asosService.reducerPath]: asosService.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(asosService.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(asosService.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
