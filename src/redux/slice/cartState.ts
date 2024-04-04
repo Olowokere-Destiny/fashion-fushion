@@ -1,37 +1,37 @@
 "use client";
-import { ItemCardProps } from "@/utils/types";
+import { CartCardProps, ItemCardProps } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-const initialState: { items: ItemCardProps[] } = {
+const initialState: { items: CartCardProps[] } = {
   items: [],
 };
 
-const bagState = createSlice({
+const cartState = createSlice({
   name: "bag",
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<ItemCardProps>) => {
+    addItemCart: (state, action: PayloadAction<CartCardProps>) => {
       const {payload} = action;
       state.items.unshift({
         name: payload.name,
         brandName: payload.brandName,
         imageUrl: payload.imageUrl,
         id: payload.id,
-        url: payload.url,
-        price: payload?.price
+        price: payload?.price,
+        qty: payload.qty
       });
     },
-    removeItem: (state, action: PayloadAction<number>) => {
+    removeItemCart: (state, action: PayloadAction<number>) => {
       const filtered = state.items.filter((item) => {
         return item.id !== action.payload;
       })
       state.items = filtered;
     },
-    clearItems: (state) => {
+    clearItemsCart: (state) => {
       state.items = []
     }
   },
 });
 
-export const { addItem, removeItem, clearItems } = bagState.actions;
-export default bagState.reducer;
+export const { addItemCart, removeItemCart, clearItemsCart } = cartState.actions;
+export default cartState.reducer;

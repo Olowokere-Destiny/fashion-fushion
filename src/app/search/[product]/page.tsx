@@ -1,15 +1,22 @@
 "use client";
-import Image from "next/image";
 import { arimo, titillium } from "@/utils/fontExports";
 import {
   useGetProductQuery,
   useGetSimilarQuery,
 } from "@/redux/fetchData/service";
-import { SimilarDataProps, SingleProductData } from "@/utils/types";
+import {
+  CartCardProps,
+  SimilarDataProps,
+  SingleProductData,
+} from "@/utils/types";
 import { ScaleLoader } from "react-spinners";
 import { IoBagOutline } from "react-icons/io5";
-import ItemCard from "@/components/ItemCard";
 import Slide from "@/components/react-slick/Slide";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addItemCart, removeItemCart } from "@/redux/slice/cartState";
+import { MdClose } from "react-icons/md";
+import ItemCard from "@/components/ItemCard";
+import { useState } from "react";
 
 interface Props {
   params: {
@@ -18,6 +25,9 @@ interface Props {
 }
 
 function Product({ params: { product } }: Props) {
+  const [quantity, setQuantity] = useState({ value: 1 });
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state.state.cartState.items);
   const {
     data: dataList,
     isFetching,
@@ -28,6 +38,76 @@ function Product({ params: { product } }: Props) {
     productData?.data?.id.toString()
   );
   const similarData: SimilarDataProps = similar;
+  function returnQty() {
+    if(quantity.value < 1) {
+      return 1
+    } else {
+      return quantity.value
+    }
+  }
+  const cartObj: CartCardProps = {
+    name: productData?.data?.name,
+    brandName: productData?.data?.brandName,
+    price: productData?.data?.price[0].productPrice.current.text,
+    imageUrl: productData?.data?.images[0].url,
+    id: productData?.data?.id,
+    qty: returnQty().toString(),
+  };
+  function addToCart(e: React.MouseEvent) {
+    e.stopPropagation();
+    dispatch(addItemCart(cartObj));
+  }
+  function removeFromCart(e: React.MouseEvent, i: number) {
+    e.stopPropagation();
+    dispatch(removeItemCart(i));
+  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setQuantity((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const renderButton = (i: number) => {
+    const arr: boolean[] = [];
+    cart.forEach((item) => {
+      if (item.id === i) {
+        arr.push(true);
+      }
+    });
+    cart.forEach((item) => {
+      if (item.id !== i) {
+        arr.push(false);
+      }
+    });
+    const inCart = arr[0];
+    if (inCart) {
+      return (
+        <div
+          onClick={(e) => removeFromCart(e, productData?.data?.id)}
+          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+        >
+          <p>REMOVE FROM BAG</p>
+          <MdClose className="w-4 h-4" />
+        </div>
+      );
+    }
+    if (!inCart) {
+      return (
+        <div
+          onClick={(e) => addToCart(e)}
+          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+        >
+          <p>ADD TO BAG</p>
+          <IoBagOutline className="w-4 h-4" />
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="padding min-h-screen">
       {productData?.data === null && (
@@ -83,18 +163,42 @@ function Product({ params: { product } }: Props) {
                   __html: productData?.data?.description?.productDescription,
                 }}
               ></p>
-              <select className="border-2 mx-auto md:mx-0 block border-[#024e82] p-2 cursor-pointer my-4 focus:outline-none">
-                {productData?.data?.variants?.map((size, i) => (
-                  <option value={size.size} key={i}>
-                    {size.size}
-                  </option>
-                ))}
-              </select>
-
-              <div className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer">
-                <p>ADD TO CART</p>
-                <IoBagOutline className="w-4 h-4" title="Bag" />
+              {productData?.data?.variants?.length > 0 && (
+                <select className="border-2 mx-auto md:mx-0 block border-[#024e82] p-2 cursor-pointer my-4 focus:outline-none">
+                  {productData?.data?.variants?.map((size, i) => (
+                    <option value={size.size} key={i}>
+                      {size.size}
+                    </option>
+                  ))}
+                </select>
+              )}
+              <div className="flex space-x-1 items-center justify-center md:block">
+                Quantity: {"  "}
+                <button
+                  onClick={() =>
+                    setQuantity((prev) => ({ ...prev, value: prev.value - 1 }))
+                  }
+                  className="border border-[#024e82] px-2"
+                >
+                  -
+                </button>
+                <input
+                  defaultValue={1}
+                  onChange={(e) => handleChange(e)}
+                  value={quantity.value}
+                  name="value"
+                  className="border-2  md:mx-0 inline w-10 text-center border-[#024e82] focus:outline-none"
+                />
+                <button
+                  onClick={() =>
+                    setQuantity((prev) => ({ ...prev, value: prev.value + 1 }))
+                  }
+                  className="border border-[#024e82] px-2"
+                >
+                  +
+                </button>
               </div>
+              {renderButton(productData?.data?.id)}
             </div>
           </div>
           <div className="mt-6">
@@ -104,12 +208,13 @@ function Product({ params: { product } }: Props) {
                 __html: productData?.data?.description?.brandDescription,
               }}
             ></p>
+            {productData?.data?.description?.careInfo !== undefined && (
+              <p className="text-[0.8rem] mt-3">
+                {`* ${productData?.data?.description?.careInfo}`}
+              </p>
+            )}
 
-            <p className="text-[0.8rem] mt-3">
-              {`* ${productData?.data?.description?.careInfo}`}
-            </p>
-
-            {similarData?.data && (
+            {similarData?.data && similarData?.data.length > 0 && (
               <div className="mt-10">
                 <h1 className="font-semibold text-[1.5rem] md:text-[1.7rem]">
                   You might also like
@@ -117,14 +222,13 @@ function Product({ params: { product } }: Props) {
                 <div className="my-8 gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {similarData?.data?.map((item, i) => (
                     <ItemCard
+                      url={item.url}
                       id={item.id}
                       key={i}
                       imageUrl={item.imageUrl}
-                      url={item.url}
                       name={item.name}
                       brandName={item.brandName}
                       price={item.price?.current.text}
-                      prevPrice={item.price.previous?.text}
                     />
                   ))}
                 </div>

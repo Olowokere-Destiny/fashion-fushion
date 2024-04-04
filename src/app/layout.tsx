@@ -4,8 +4,9 @@ import "./globals.css";
 import NavBar from "@/components/nav/NavBar";
 import Footer from "@/components/Footer";
 import store from "@/redux/store";
-
 import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -17,15 +18,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let persistor = persistStore(store);
   return (
-    <Provider store={store}>
-      <html lang="en">
-        <body className={lato.className}>
-          <NavBar />
-          {children}
-          <Footer />
-        </body>
-      </html>
-    </Provider>
+    <html lang="en">
+      <body className={lato.className}>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <NavBar />
+            {children}
+            <Footer />
+          </PersistGate>
+        </Provider>
+      </body>
+    </html>
   );
 }

@@ -17,8 +17,16 @@ export interface ItemCardProps {
   additionalImageUrls?: string;
   id: number;
   url: string;
-  prevPrice: string | undefined;
+  prevPrice?: string | undefined;
   price: string;
+}
+export interface CartCardProps {
+  name: string;
+  brandName: string;
+  imageUrl: string;
+  id: number;
+  price: string;
+  qty: string;
 }
 
 export interface ItemProps {
