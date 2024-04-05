@@ -1,13 +1,13 @@
 import { Stripe, loadStripe } from "@stripe/stripe-js";
-// interface CheckoutProps {
-//   lineItems: [{ price: string | undefined; quantity: number }];
-// }
-export default async function stripeCheckout({ lineItems }: any) {
+interface CheckoutProps {
+  lineItems: [{ price: string | undefined; quantity: number }];
+}
+export default async function stripeCheckout({ lineItems }: CheckoutProps) {
   let stripePromise: Promise<Stripe | null>;
 
   function getStripe() {
     if (!stripePromise) {
-      stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY!);
+      stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY as string);
     }
     return stripePromise;
   }
