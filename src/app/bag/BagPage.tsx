@@ -17,18 +17,20 @@ function BagPage() {
         </div>
       )}
       {Array.isArray(cart) && cart.length > 0 && (
-        <div className="min-h-screen gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {cart.map((item, i) => (
-            <CartItemCard
-              imageUrl={item.imageUrl}
-              id={item.id}
-              key={i}
-              name={item.name}
-              brandName={item.brandName}
-              price={item.price}
-              qty={item.qty}
-            />
-          ))}
+        <div className="min-h-screen ">
+          <div className="gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {cart.map((item, i) => (
+              <CartItemCard
+                imageUrl={item.imageUrl}
+                id={item.id}
+                key={i}
+                name={item.name}
+                brandName={item.brandName}
+                price={item.price}
+                qty={item.qty}
+              />
+            ))}
+          </div>
         </div>
       )}
       {cart.length > 0 && (
