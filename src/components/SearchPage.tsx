@@ -62,7 +62,7 @@ function Searchpage() {
 
   return (
     <Suspense>
-      <div className="padding">
+      <div className="padding min-h-screen">
         {isFetching && (
           <div className="h-screen flex items-center justify-center">
             <ScaleLoader color={"#024e82"} />
@@ -92,8 +92,8 @@ function Searchpage() {
           </h1>
         )}
         {Array.isArray(results) && results.length > 0 && (
-          <>
-            <div className="min-h-screen gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="min-h-[60vh]">
+            <div className="gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {results.map((item, i) => (
                 <ItemCard
                   imageUrl={item.imageUrl}
@@ -129,7 +129,7 @@ function Searchpage() {
                 className="block mx-auto my-2"
               />
             )}
-          </>
+          </div>
         )}
       </div>
     </Suspense>

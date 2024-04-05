@@ -39,7 +39,7 @@ function Product({ params: { product } }: Props) {
   );
   const similarData: SimilarDataProps = similar;
   function returnQty() {
-    if(quantity.value < 1) {
+    if(quantity.value < 1 || isNaN(quantity.value)) {
       return 1
     } else {
       return quantity.value

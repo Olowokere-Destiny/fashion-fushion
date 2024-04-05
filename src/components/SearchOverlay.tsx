@@ -67,7 +67,7 @@ function SearchOverlay({ open, toggle }: Props) {
     <div
       className={`${
         open ? "block" : "hidden"
-      } pt-[5.2rem] md:pt-10 w-full absolute bottom-0 h-screen z-50 padding bg-[#eeecec] z-[1200]`}
+      } pt-[5.2rem] md:pt-10 w-full absolute bottom-0 h-screen padding bg-[#eeecec] z-[1200]`}
     >
       <MdClose
         onClick={toggle}
