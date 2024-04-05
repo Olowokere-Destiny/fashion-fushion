@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import SidebarContent from "./SidebarContent";
 import { arimo } from "@/utils/fontExports";
 import SearchOverlay from "../SearchOverlay";
+import { useAppSelector } from "@/redux/hooks";
 
 function NavBar() {
   const pathname = usePathname();
@@ -25,6 +26,8 @@ function NavBar() {
   const toggleSearchOpen = () => {
     setIsSearchOpen(false);
   };
+  const bag = useAppSelector((state) => state.state.bagState.items);
+  const cart = useAppSelector((state) => state.state.cartState.items);
   useEffect(() => {
     document.body.style.overflowY = isSearchOpen ? "hidden" : "scroll";
   }, [isSearchOpen]);
@@ -91,14 +94,27 @@ function NavBar() {
             className="cursor-pointer w-6 h-6"
             title="Search"
           />
-          <Link href="/favourites" className={`cursor-pointer w-6 h-6  ${pathname === "/favourites" ? "text-blue" : ""}`}>
-          <IoIosHeartEmpty
-            className="cursor-pointer w-6 h-6"
-            title="Favourites"
-          />
+          <Link href="/favourites" className="relative">
+            {bag.length > 0 && (
+              <span className="bg-blue absolute right-0 top-0 w-1 h-1 rounded-full"></span>
+            )}
+            <IoIosHeartEmpty
+              className={`cursor-pointer w-6 h-6  ${
+                pathname === "/favourites" ? "text-blue" : ""
+              }`}
+              title="Favourites"
+            />
           </Link>
-          <Link href="/bag" className="">
-            <IoBagOutline className={`cursor-pointer w-6 h-6  ${pathname === "/bag" ? "text-blue" : ""}`} title="Bag" />
+          <Link href="/bag" className="relative">
+            {cart.length > 0 && (
+              <span className="bg-blue absolute right-0 top-0 w-1 h-1 rounded-full"></span>
+            )}
+            <IoBagOutline
+              className={`cursor-pointer w-6 h-6  ${
+                pathname === "/bag" ? "text-blue" : ""
+              }`}
+              title="Bag"
+            />
           </Link>
         </div>
       </div>
