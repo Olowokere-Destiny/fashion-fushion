@@ -7,7 +7,7 @@ export default async function stripeCheckout({ lineItems }: CheckoutProps) {
 
   function getStripe() {
     if (!stripePromise) {
-      stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY as string);
+      stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY!);
     }
     return stripePromise;
   }
