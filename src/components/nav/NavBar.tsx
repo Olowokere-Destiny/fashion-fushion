@@ -48,6 +48,7 @@ function NavBar() {
           src={icon}
           alt="icon"
           className="w-[8rem] lg:w-[10rem] absolute top-12"
+          unoptimized
         />
         <GoArrowLeft
           className="w-5 h-5 md:w-6 md:h-6 absolute top-[1.5rem] text-[1.2rem] right-[1rem] text-brown cursor-pointer"
@@ -69,6 +70,7 @@ function NavBar() {
                 src={icon}
                 alt="icon"
                 className="w-[8rem] lg:w-[10rem]"
+                unoptimized
               />
             </Link>
           </div>

@@ -55,6 +55,7 @@ function Testimonial({ comment, name, image }: TestimonialProps) {
           width={100}
           height={100}
           className="w-4 h-4 md:w-7 md:h-7"
+          unoptimized
         />
         <p
           className={`${nunito.className} text-[0.9rem] text-[#555] font-[700]`}

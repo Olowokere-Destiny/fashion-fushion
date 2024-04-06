@@ -23,6 +23,7 @@ function SidebarContent({ toggle }: { toggle: () => void }) {
             alt="photo"
             src={images[i]}
             className="h-[3rem] w-10"
+            unoptimized
           />
         </Link>
       ))}
