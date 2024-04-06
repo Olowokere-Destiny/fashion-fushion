@@ -78,6 +78,7 @@ export default function Home() {
             width={100}
             height={100}
             className="w-7 pt-3"
+            unoptimized
           />
           <div>
             <h2 className={`${nunito.className} font-[700]`}>FREE SHIPPING</h2>
@@ -93,6 +94,7 @@ export default function Home() {
             width={100}
             height={100}
             className="w-7 pt-3"
+            unoptimized
           />
           <div>
             <h2 className={`${nunito.className} font-[700]`}>SUPPORT 24/7</h2>
@@ -108,6 +110,7 @@ export default function Home() {
             width={100}
             height={100}
             className="w-7 pt-3"
+            unoptimized
           />
           <div>
             <h2 className={`${nunito.className} font-[700]`}>30 DAYS RETURN</h2>
@@ -123,6 +126,7 @@ export default function Home() {
             width={100}
             height={100}
             className="w-7 pt-3"
+            unoptimized
           />
           <div>
             <h2 className={`${nunito.className} font-[700]`}>
@@ -170,6 +174,7 @@ export default function Home() {
               width={100}
               height={100}
               className="hover:opacity-70 transition-all"
+              unoptimized
             />
           </div>
           <div className="">
@@ -179,6 +184,7 @@ export default function Home() {
               width={100}
               height={100}
               className="hover:opacity-70 transition-all"
+              unoptimized
             />
           </div>
           <div className="">
@@ -188,6 +194,7 @@ export default function Home() {
               width={100}
               height={100}
               className="hover:opacity-70 transition-all"
+              unoptimized
             />
           </div>
           <div className="">
@@ -197,6 +204,7 @@ export default function Home() {
               width={100}
               height={100}
               className="hover:opacity-70 transition-all"
+              unoptimized
             />
           </div>
         </div>
