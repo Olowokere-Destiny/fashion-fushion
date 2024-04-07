@@ -26,7 +26,7 @@ function ContactUs() {
           <div>
             <h1 className="text-[1.3rem] font-[600]">Get In Touch</h1>
             <p className="text-[#555]">You can get in touch with us on this provided email. </p>
-            <p className="text-[#555]">destinyolowokere@gmail.com</p>
+            <p className="text-[#555]">thisgooddev@gmail.com</p>
           </div>
         </div>
       </div>

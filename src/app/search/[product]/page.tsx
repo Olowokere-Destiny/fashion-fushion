@@ -1,9 +1,6 @@
 "use client";
 import { arimo, titillium } from "@/utils/fontExports";
-import {
-  useGetProductQuery,
-  useGetSimilarQuery,
-} from "@/redux/fetchData/service";
+import { useGetProductQuery } from "@/redux/fetchData/service";
 import {
   CartCardProps,
   SimilarDataProps,
@@ -16,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addItemCart, removeItemCart } from "@/redux/slice/cartState";
 import { MdClose } from "react-icons/md";
 import ItemCard from "@/components/ItemCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   params: {
@@ -26,6 +23,7 @@ interface Props {
 
 function Product({ params: { product } }: Props) {
   const [quantity, setQuantity] = useState({ value: 1 });
+  const [similar, setSimilar] = useState<SimilarDataProps>();
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.state.cartState.items);
   const {
@@ -34,15 +32,11 @@ function Product({ params: { product } }: Props) {
     isError,
   } = useGetProductQuery(decodeURIComponent(product));
   const productData: SingleProductData = dataList;
-  const { data: similar } = useGetSimilarQuery(
-    productData?.data?.id.toString()
-  );
-  const similarData: SimilarDataProps = similar;
   function returnQty() {
-    if(quantity.value < 1 || isNaN(quantity.value)) {
-      return 1
+    if (quantity.value < 1 || isNaN(quantity.value)) {
+      return 1;
     } else {
-      return quantity.value
+      return quantity.value;
     }
   }
   const cartObj: CartCardProps = {
@@ -107,6 +101,27 @@ function Product({ params: { product } }: Props) {
       );
     }
   };
+
+  async function getSimilar(id: number) {
+    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/products/list-similarities?id=${id}`;
+    const options = {
+      method: "GET",
+      url,
+      headers: {
+        "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
+        "X-RapidAPI-Host": "asos-com1.p.rapidapi.com",
+      },
+    };
+
+    return fetch(url, options)
+      .then((response) => response.json())
+      .then((res) => setSimilar(res));
+  }
+  useEffect(() => {
+    if (productData?.data !== null && productData?.data?.id) {
+      getSimilar(productData?.data?.id);
+    }
+  }, [productData]);
 
   return (
     <div className="padding min-h-screen">
@@ -173,7 +188,7 @@ function Product({ params: { product } }: Props) {
                 </select>
               )}
               <div className="flex space-x-1 items-center justify-center md:block">
-                Quantity: {"  "}
+                <span>Quantity:</span>
                 <button
                   onClick={() =>
                     setQuantity((prev) => ({ ...prev, value: prev.value - 1 }))
@@ -183,6 +198,7 @@ function Product({ params: { product } }: Props) {
                   -
                 </button>
                 <input
+                  type="text"
                   defaultValue={1}
                   onChange={(e) => handleChange(e)}
                   value={quantity.value}
@@ -214,13 +230,13 @@ function Product({ params: { product } }: Props) {
               </p>
             )}
 
-            {similarData?.data && similarData?.data.length > 0 && (
+            {similar?.data && similar?.data.length > 0 && (
               <div className="mt-10">
                 <h1 className="font-semibold text-[1.5rem] md:text-[1.7rem]">
                   You might also like
                 </h1>
                 <div className="my-8 gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {similarData?.data?.map((item, i) => (
+                  {similar?.data?.map((item, i) => (
                     <ItemCard
                       url={item.url}
                       id={item.id}
