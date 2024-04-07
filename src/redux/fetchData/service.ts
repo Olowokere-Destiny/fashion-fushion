@@ -23,11 +23,8 @@ export const asosService = createApi({
           url
         }
       }),
-    }),
-    getSimilar: builder.query({
-      query: (id:string) => `products/list-similarities?id=${id}`,
-    }),
+    })
   }),
 });
 
-export const { useSearchQuery, useGetProductQuery, useGetSimilarQuery } = asosService;
+export const { useSearchQuery, useGetProductQuery } = asosService;
