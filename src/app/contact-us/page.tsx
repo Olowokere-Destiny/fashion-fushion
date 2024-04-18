@@ -3,7 +3,7 @@ import "./styles.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Us - FashionFusion",
   description: "FashionFusion contact page",
 };
 

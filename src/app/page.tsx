@@ -26,7 +26,7 @@ import { nunito } from "@/utils/fontExports";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Home - FashionFusion",
   description: "FashionFusion home page",
 };
 
@@ -34,10 +34,17 @@ export default function Home() {
   return (
     <div>
       {/* Hero section */}
-      <div className="hero-bg p-[5rem]">
-        <div className="flex justify-between items-center w-full h-full">
-          <div className="hidden md:block w-1/2"></div>
-          <div className="text-white text-center">
+      <div className="hero-bg px-4 md:p-[3rem] lg:p-[5rem]">
+        <div className="flex flex-col-reverse md:flex-row justify-evenly gap-y-4 md:gap-y-0 md:justify-between items-center w-full h-full">
+          <div className="md:w-[60%] lg:w-1/2 text-white">
+            <h1 className="hidden md:block text-[1.5rem] md:text-[2.3rem] lg:text-[2.6rem] font-[600]">Fashion Fusion</h1>
+            <div className="text-[1.2rem] font-semibold space-y-1">
+            <p>Welcome to Fashion Fusion, the only clothing website you'll ever need.</p>
+            <p>Discover millions of clothing - shoes, bags, shirts and mooore.. !!</p>
+            <p>Your next piece of fashion is just a search away.</p>
+            </div>
+          </div>
+          <div className="text-white text-center md:w-[40%] lg:w-max">
             <h1 className="leading-relaxed md:leading-normal text-[2rem] text-white uppercase font-[700] md:font-[800] tracking-wide">
               stylist picks beat <br className="hidden md:block" />
               the heat
