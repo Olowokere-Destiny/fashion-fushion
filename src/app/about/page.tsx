@@ -69,7 +69,7 @@ function Testimonial({ comment, name, image }: TestimonialProps) {
 }
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About - FashionFusion",
   description: "About FashionFusion",
 };
 
