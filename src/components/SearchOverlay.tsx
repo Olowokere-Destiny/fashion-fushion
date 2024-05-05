@@ -49,9 +49,13 @@ function SearchOverlay({ open, toggle }: Props) {
       },
     };
 
-    return fetch(url, options)
-      .then((response) => response.json())
-      .then((res) => setResults(res));
+    fetch(url, options)
+      .then((response) => {
+        return response.json();
+      })
+      .then((res) => {
+        setResults(res);
+      });
   }
 
   useEffect(() => {
@@ -59,7 +63,7 @@ function SearchOverlay({ open, toggle }: Props) {
       if (search.searchTerm.trim().length > 2) {
         autoComplete(search.searchTerm);
       }
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timeout);
   }, [inputTrack]);
 
@@ -81,6 +85,16 @@ function SearchOverlay({ open, toggle }: Props) {
         searchTrigger={searchTrigger}
         setSearchTrigger={setSearchTrigger}
       />
+
+      {search.searchTerm.trim().length > 0 && (
+        <div
+          className="bg-[#fafafa] mx-auto rounded-md py-4 px-6 text-center md:w-5/6 mb-3 cursor-pointer hover:scale-[102%] transition-all"
+          onClick={() => handleSubmit(undefined, search.searchTerm)}
+        >
+          Search for{" "}
+          <span className="font-bold">"{search.searchTerm.trim()}"</span>
+        </div>
+      )}
 
       <div className="h-5/6 mx-auto md:w-5/6 p-4 overflow-auto no-scrollbar">
         {Array.isArray(suggestions) &&
