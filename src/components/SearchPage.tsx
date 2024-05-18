@@ -26,6 +26,10 @@ function Searchpage() {
     setTotalPages(returnedData?.totalPages);
     setTotalResCount(returnedData?.totalResultCount)
   }, [returnedData?.data.products]);
+  
+  useEffect(()=>{
+    document.title = `Search Results for  ${queryString}`
+  }, [results])
 
   async function showMore() {
     const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/products/search?q=${queryString}&page=${page}`;

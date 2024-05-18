@@ -2,7 +2,6 @@ import Searchpage from "@/components/SearchPage";
 import { Suspense } from "react";
 import {Metadata} from "next"
 export const metadata: Metadata = {
-  title: "Search Results",
   description: "Displaying results for searched items on FashionFusion"
 }
 function SuspenseWrapper() {

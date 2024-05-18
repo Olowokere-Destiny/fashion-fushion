@@ -121,6 +121,9 @@ function Product({ params: { product } }: Props) {
     if (productData?.data !== null && productData?.data?.id) {
       getSimilar(productData?.data?.id);
     }
+    if (productData?.data?.name) {
+      document.title = productData?.data.name;
+    }
   }, [productData]);
 
   return (
