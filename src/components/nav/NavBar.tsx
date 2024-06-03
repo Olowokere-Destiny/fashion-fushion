@@ -91,32 +91,39 @@ function NavBar() {
           </div>
         </div>
         <div className="flex items-center gap-x-4">
-          <IoSearchOutline
+
+          <div
             onClick={() => setIsSearchOpen(true)}
-            className="cursor-pointer w-6 h-6"
-            title="Search"
-          />
-          <Link href="/favourites" className="relative">
+            className="cursor-pointer md:hover:bg-[#efefef] md:flex md:items-center md:gap-x-1 md:px-2 md:py-1 md:rounded-[0.7rem]"
+          >
+            <IoSearchOutline className="w-6 h-6" title="Search" />
+            <p className="hidden md:block font-semibold text-[0.75rem]">Search</p>
+          </div>
+          
+          <Link href="/favourites" className={`${pathname === "/favourites" && "md:bg-[#efefef]"} relative md:hover:bg-[#efefef] md:flex md:items-center md:gap-x-1 md:px-2 md:py-1 md:rounded-[0.7rem]`}>
             {bag.length > 0 && (
-              <span className="bg-blue absolute right-0 top-0 w-1 h-1 rounded-full"></span>
-            )}
+              <span className="bg-blue absolute right-0 top-0 w-1 h-1 md:w-2 md:h-2 rounded-full"></span>
+              )}
             <IoIosHeartEmpty
-              className={`cursor-pointer w-6 h-6  ${
+              className={`w-6 h-6  ${
                 pathname === "/favourites" ? "text-blue" : ""
               }`}
               title="Favourites"
             />
+              <p className="hidden md:block font-semibold text-[0.75rem]">Favourites</p>
           </Link>
-          <Link href="/bag" className="relative">
+
+          <Link href="/bag" className={`${pathname === "/bag" && "md:bg-[#efefef]"} relative md:hover:bg-[#efefef] md:flex md:items-center md:gap-x-1 md:px-2 md:py-1 md:rounded-[0.7rem]`}>
             {cart.length > 0 && (
-              <span className="bg-blue absolute right-0 top-0 w-1 h-1 rounded-full"></span>
-            )}
+              <span className="bg-blue absolute right-0 top-0 w-1 h-1 md:w-2 md:h-2 rounded-full"></span>
+              )}
             <IoBagOutline
-              className={`cursor-pointer w-6 h-6  ${
+              className={`w-6 h-6  ${
                 pathname === "/bag" ? "text-blue" : ""
               }`}
               title="Bag"
             />
+              <p className="hidden md:block font-semibold text-[0.75rem]">Bag</p>
           </Link>
         </div>
       </div>

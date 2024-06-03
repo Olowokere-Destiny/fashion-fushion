@@ -13,8 +13,14 @@ export const asosService = createApi({
   }),
 
   endpoints: (builder) => ({
+    autoComplete: builder.query({
+      query: (body:string) => `/products/auto-complete?q=${body}`,
+    }),
     search: builder.query({
       query: (body:string) => `/products/search?q=${body}`,
+    }),
+    showMore: builder.query({
+      query: (body: {query:string,page:number}) => `/products/search?q=${body.query}&page=${body.page}`,
     }),
     getProduct: builder.query({
       query: (url:string) => ({
@@ -27,4 +33,4 @@ export const asosService = createApi({
   }),
 });
 
-export const { useSearchQuery, useGetProductQuery } = asosService;
+export const { useLazyAutoCompleteQuery, useSearchQuery, useLazyShowMoreQuery, useGetProductQuery } = asosService;

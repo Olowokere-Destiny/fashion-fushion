@@ -4,12 +4,14 @@ import SearchBox from "./SearchBox";
 import { MdClose } from "react-icons/md";
 import { AutoComplete } from "@/utils/types";
 import { useRouter } from "next/navigation";
+import { useLazyAutoCompleteQuery } from "@/redux/fetchData/service";
 
 interface Props {
   open: boolean;
   toggle: () => void;
 }
 function SearchOverlay({ open, toggle }: Props) {
+  const [autoComp, { data, isFetching, isError }] = useLazyAutoCompleteQuery();
   const [search, setSearch] = useState({ searchTerm: "" });
   const [results, setResults] = useState<AutoComplete>();
   const [inputTrack, setInputTrack] = useState(0);
@@ -36,27 +38,14 @@ function SearchOverlay({ open, toggle }: Props) {
     }
   };
 
-  const suggestions = results?.data.suggestionGroups[0].suggestions;
+  useEffect(() => {
+    setResults(data);
+  }, [data]);
 
   async function autoComplete(body: string) {
-    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/products/auto-complete?q=${body}`;
-    const options = {
-      method: "GET",
-      url,
-      headers: {
-        "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
-        "X-RapidAPI-Host": "asos-com1.p.rapidapi.com",
-      },
-    };
-
-    fetch(url, options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-        setResults(res);
-      });
+    autoComp(body);
   }
+  const suggestions = results?.data.suggestionGroups[0].suggestions;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -73,10 +62,14 @@ function SearchOverlay({ open, toggle }: Props) {
         open ? "block" : "hidden"
       } pt-[3rem] md:pt-[4rem] w-full absolute bottom-0 h-screen padding bg-[#eeecec] z-[1200]`}
     >
-      <MdClose
+      <div
         onClick={toggle}
-        className="cursor-pointer text-[1.7rem] absolute right-4 top-5 md:top-6 md:right-8"
-      />
+        className="md:hover:bg-[#cacaca] md:p-1 md:rounded-lg md:flex md:items-center md:gap-x-1 cursor-pointer text-[1.7rem] md:text-[1.5rem] absolute right-4 top-5 md:top-6 md:right-8"
+      >
+        <MdClose />
+        <p className="hidden md:block font-semibold text-[0.8rem]">Close</p>
+      </div>
+
       <SearchBox
         search={search}
         setSearch={setSearch}
@@ -96,7 +89,10 @@ function SearchOverlay({ open, toggle }: Props) {
         </div>
       )}
 
-      <div className="h-5/6 mx-auto md:w-5/6 p-4 overflow-auto no-scrollbar">
+      {isFetching && <p className="pt-1 text-[0.9rem] text-blue text-center">Getting items...</p>}
+      {isError && <p className="pt-1 text-[0.9rem] text-red-500 text-center">An error occured.</p>}
+
+      <div className="mx-auto md:w-5/6 p-4 overflow-auto no-scrollbar">
         {Array.isArray(suggestions) &&
           suggestions.map((suggestion, i) => (
             <div

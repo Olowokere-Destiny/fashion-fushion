@@ -1,6 +1,9 @@
 "use client";
 import ItemCard from "@/components/ItemCard";
-import { useSearchQuery } from "@/redux/fetchData/service";
+import {
+  useLazyShowMoreQuery,
+  useSearchQuery,
+} from "@/redux/fetchData/service";
 import { ItemProps, ItemCardData } from "@/utils/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
@@ -10,7 +13,6 @@ function Searchpage() {
   const [queryString, setQueryString] = useState<string | null>();
   const [totalPages, setTotalPages] = useState(0);
   const [totalResCount, setTotalResCount] = useState(0);
-  const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams().get("q");
   useEffect(() => {
     setQueryString(searchParams);
@@ -18,49 +20,38 @@ function Searchpage() {
 
   const [results, setResults] = useState<ItemProps[]>([]);
   const { data, isFetching, isError } = useSearchQuery(queryString as string);
+  const [moreFn, { data: moreData, isFetching: moreFetching, isSuccess, isError: moreError }] =
+    useLazyShowMoreQuery();
   const [page, setPage] = useState(1);
   const returnedData: ItemCardData = data;
 
   useEffect(() => {
     setResults(returnedData?.data.products);
     setTotalPages(returnedData?.totalPages);
-    setTotalResCount(returnedData?.totalResultCount)
+    setTotalResCount(returnedData?.totalResultCount);
   }, [returnedData?.data.products]);
-  
+
+  useEffect(() => {
+    document.title = `Search Results for  ${queryString}`;
+  }, [results]);
+
   useEffect(()=>{
-    document.title = `Search Results for  ${queryString}`
-  }, [results])
-
-  async function showMore() {
-    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/products/search?q=${queryString}&page=${page}`;
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
-      },
-    };
-
-    try {
-      setLoading(true);
-      const response = await fetch(url, options);
-      const res = await response.json();
-      const results: ItemCardData = res;
-      results && setLoading(false);
+    if (isSuccess) {
       setResults((prev) => {
-        return [...prev, ...results?.data?.products];
+        return [...prev, ...moreData?.data?.products];
       });
-      setTotalPages(results.totalPages);
-      setTotalResCount(results.totalResultCount)
-    } catch (error) {
-      if (error) {
-        setLoading(false);
-      }
+      setTotalPages(moreData?.totalPages);
+      setTotalResCount(moreData?.totalResultCount);
     }
+  }, [moreData?.data])
+
+  async function showMore(query: string, page: number) {
+    moreFn({ query, page });
   }
 
   useEffect(() => {
     if (page > 1) {
-      showMore();
+      showMore(queryString as string, page);
     }
   }, [page]);
 
@@ -91,8 +82,8 @@ function Searchpage() {
             Search results for:{" "}
             <span className="font-semibold text-[1rem] capitalize">
               {queryString}
-            </span>
-            {" "}<span>{`(${totalResCount})`}</span>
+            </span>{" "}
+            <span>{`(${totalResCount})`}</span>
           </h1>
         )}
         {Array.isArray(results) && results.length > 0 && (
@@ -113,7 +104,7 @@ function Searchpage() {
               ))}
             </div>
 
-            {!loading && (
+            {!moreFetching && !moreError && (
               <div
                 onClick={() => {
                   setPage((prev) => prev + 1);
@@ -126,13 +117,16 @@ function Searchpage() {
               </div>
             )}
 
-            {loading && (
+            {moreFetching && (
               <ScaleLoader
                 style={{ textAlign: "center" }}
                 color="#024e82"
                 className="block mx-auto my-2"
               />
             )}
+            {
+              moreError && <p className="text-center text-[0.8rem] text-red-500 pt-3">An error occured. Please refresh the page.</p>
+            }
           </div>
         )}
       </div>
