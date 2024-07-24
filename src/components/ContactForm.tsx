@@ -48,9 +48,9 @@ function ContactForm() {
         type="button"
         className={`${
           sent && "hidden"
-        } block my-8  px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white bg-blue w-max`}
+        } block my-8  px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white bg-blue w-max btn-effect`}
       >
-        SEND MESSAGE
+        send message
       </button>
     </div>
   );

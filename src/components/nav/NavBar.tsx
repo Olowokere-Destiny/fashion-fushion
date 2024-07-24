@@ -97,7 +97,7 @@ function NavBar() {
             className="cursor-pointer md:hover:bg-[#efefef] md:flex md:items-center md:gap-x-1 md:px-2 md:py-1 md:rounded-[0.7rem]"
           >
             <IoSearchOutline className="w-6 h-6" title="Search" />
-            <p className="hidden md:block font-semibold text-[0.75rem]">Search</p>
+            <p className="hidden md:block font-semibold text-[0.8rem]">Search</p>
           </div>
           
           <Link href="/favourites" className={`${pathname === "/favourites" && "md:bg-[#efefef]"} relative md:hover:bg-[#efefef] md:flex md:items-center md:gap-x-1 md:px-2 md:py-1 md:rounded-[0.7rem]`}>
@@ -110,7 +110,7 @@ function NavBar() {
               }`}
               title="Favourites"
             />
-              <p className="hidden md:block font-semibold text-[0.75rem]">Favourites</p>
+              <p className="hidden md:block font-semibold text-[0.8rem]">Favourites</p>
           </Link>
 
           <Link href="/bag" className={`${pathname === "/bag" && "md:bg-[#efefef]"} relative md:hover:bg-[#efefef] md:flex md:items-center md:gap-x-1 md:px-2 md:py-1 md:rounded-[0.7rem]`}>
@@ -123,7 +123,7 @@ function NavBar() {
               }`}
               title="Bag"
             />
-              <p className="hidden md:block font-semibold text-[0.75rem]">Bag</p>
+              <p className="hidden md:block font-semibold text-[0.8rem]">Bag</p>
           </Link>
         </div>
       </div>

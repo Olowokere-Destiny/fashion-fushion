@@ -111,7 +111,7 @@ function Searchpage() {
                 }}
                 className={`${
                   page === totalPages ? "hidden" : "block"
-                } my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer`}
+                } my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer btn-effect`}
               >
                 SHOW MORE
               </div>

@@ -82,7 +82,7 @@ function Product({ params: { product } }: Props) {
       return (
         <div
           onClick={(e) => removeFromCart(e, productData?.data?.id)}
-          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center btn-effect w-max cursor-pointer"
         >
           <p>REMOVE FROM BAG</p>
           <MdClose className="w-4 h-4" />
@@ -93,7 +93,7 @@ function Product({ params: { product } }: Props) {
       return (
         <div
           onClick={(e) => addToCart(e)}
-          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center btn-effect w-max cursor-pointer"
         >
           <p>ADD TO BAG</p>
           <IoBagOutline className="w-4 h-4" />

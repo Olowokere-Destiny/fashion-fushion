@@ -24,6 +24,7 @@ import "./styles.css";
 import Image from "next/image";
 import { nunito } from "@/utils/fontExports";
 import { Metadata } from "next";
+import SwiperCarousel from "../components/swiper-carousel/SwiperCarousel";
 
 export const metadata: Metadata = {
   title: "Home - FashionFusion",
@@ -33,28 +34,9 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div>
-      {/* Hero section */}
-      <div className="hero-bg px-4 md:p-[3rem] lg:p-[5rem]">
-        <div className="flex flex-col-reverse md:flex-row justify-evenly gap-y-4 md:gap-y-0 md:justify-between items-center w-full h-full">
-          <div className="md:w-[60%] lg:w-1/2 text-white">
-            <h1 className="hidden md:block text-[1.5rem] md:text-[2.3rem] lg:text-[2.6rem] font-[600]">Fashion Fusion</h1>
-            <div className="text-[1.2rem] font-semibold space-y-1">
-            <p>Welcome to Fashion Fusion, the only clothing website you'll ever need.</p>
-            <p>Discover millions of clothing - shoes, bags, shirts and mooore.. !!</p>
-            <p>Your next piece of fashion is just a search away.</p>
-            </div>
-          </div>
-          <div className="text-white text-center md:w-[40%] lg:w-max">
-            <h1 className="leading-relaxed md:leading-normal text-[2rem] text-white uppercase font-[700] md:font-[800] tracking-wide">
-              stylist picks beat <br className="hidden md:block" />
-              the heat
-            </h1>
-            <div className="font-semibold text-[0.8rem] my-2 w-max mx-auto px-4 py-2 cursor-pointer hover:bg-white hover:text-black border-[3px] border-white">
-              <p>SHOP NOW</p>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      {/* Hero section swipe carousel*/}
+      <SwiperCarousel />
 
       {/* Discover section */}
       <div className="my-12 md:mt-16 padding">
@@ -143,6 +125,28 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* welcome banner */}
+            <div className="hero-bg lg:bg-bottom px-4 md:p-[3rem] lg:p-[5rem]">
+        <div className="flex flex-col-reverse md:flex-row justify-evenly gap-y-4 md:gap-y-0 md:justify-between items-center w-full h-full">
+          <div className="md:w-[60%] lg:w-1/2 text-white">
+            <h1 className="hidden md:block text-[1.5rem] md:text-[2.3rem] lg:text-[2.6rem] font-[600]">Fashion Fusion</h1>
+            <div className="text-[1.2rem] font-semibold space-y-1">
+            <p>Welcome to Fashion Fusion, the only clothing website you'll ever need.</p>
+            <p>Discover millions of clothing - shoes, bags, shirts and mooore.. !!</p>
+            <p>Your next piece of fashion is just a search away.</p>
+            </div>
+          </div>
+          <div className="text-white text-center md:w-[40%] lg:w-max">
+            <h1 className="leading-relaxed md:leading-normal text-[2rem] text-white uppercase font-[700] md:font-[800] tracking-wide">
+              stylist picks beat <br className="hidden md:block" />
+              the heat
+            </h1>
+            <div className="font-semibold text-[0.8rem] my-2 w-max mx-auto px-4 py-2 cursor-pointer hover:bg-white hover:text-black border-[3px] border-white">
+              <p>SHOP NOW</p>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* top sellers section */}
       <div className="my-12 md:mt-16 padding ">
         <h1 className="text-[2rem] text-center font-[700] ">Top Sellers</h1>
@@ -217,7 +221,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer">
+      <div className="btn-effect my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer">
         SHOP NOW
       </div>
     </div>

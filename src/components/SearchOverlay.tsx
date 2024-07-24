@@ -60,11 +60,11 @@ function SearchOverlay({ open, toggle }: Props) {
     <div
       className={`${
         open ? "block" : "hidden"
-      } pt-[3rem] md:pt-[4rem] w-full absolute bottom-0 h-screen padding bg-[#eeecec] z-[1200]`}
+      } pt-[3rem] md:pt-[4rem] w-full absolute top-0 right-0 left-0 bottom-0 h-[100dvh] padding bg-[#eeecec] z-[1200]`}
     >
       <div
         onClick={toggle}
-        className="md:hover:bg-[#cacaca] md:p-1 md:rounded-lg md:flex md:items-center md:gap-x-1 cursor-pointer text-[1.7rem] md:text-[1.5rem] absolute right-4 top-5 md:top-6 md:right-8"
+        className="md:hover:bg-[#cacaca] md:p-1 md:rounded-lg md:flex md:items-center md:gap-x-1 cursor-pointer text-[1.7rem] md:text-[1.5rem] absolute right-4 top-5 md:top-6 md:right-8 md:px-2"
       >
         <MdClose />
         <p className="hidden md:block font-semibold text-[0.8rem]">Close</p>
