@@ -29,10 +29,10 @@ export default function SwiperCarousel() {
         }}
         loop={true}
         modules={[Autoplay, Pagination]}
-        className={`swiper-container ${outfit.className}`}
+        className={`swiper-container w-full overflow-hidden relative h-[38rem] lg:h-[28rem] xlg:h-[35rem] ${outfit.className}`}
       >
         <SwiperSlide
-          className="bgslide1 swiper-slide text-white justify-center md:justify-start px-24 bg-cover left-shift1"
+          className="bgslide1 swiper-slide text-white justify-center md:justify-start px-24 bg-cover left-shift"
           data-swiper-autoplay="5000"
         >
           <div className="md:w-3/4 lg:w-1/2">
@@ -115,7 +115,7 @@ export default function SwiperCarousel() {
           </div>
         </SwiperSlide>
         <SwiperSlide
-          className="bgslide5 swiper-slide text-white justify-center md:justify-start px-24 bg-cover left-shift2"
+          className="bgslide5 swiper-slide text-white justify-center md:justify-start px-24 bg-cover right-shift"
           data-swiper-autoplay="5000"
         >
           <div className="md:w-3/4 lg:w-1/2">

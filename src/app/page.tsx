@@ -141,7 +141,7 @@ export default function Home() {
               stylist picks beat <br className="hidden md:block" />
               the heat
             </h1>
-            <div className="font-semibold text-[0.8rem] my-2 w-max mx-auto px-4 py-2 cursor-pointer hover:bg-white hover:text-black border-[3px] border-white">
+            <div className="transition-all duration-[400ms] font-semibold text-[0.8rem] my-2 w-max mx-auto px-4 py-2 cursor-pointer hover:bg-white hover:text-black border-[3px] border-white">
               <p>SHOP NOW</p>
             </div>
           </div>
