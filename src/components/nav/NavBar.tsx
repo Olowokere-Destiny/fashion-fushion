@@ -56,7 +56,8 @@ function NavBar() {
         />
         <SidebarContent toggle={toggleDrawer} />
       </Drawer>
-      <div className="flex items-center py-6 justify-between px-[0.8rem] md:px-[3rem] lg:px-[5rem]">
+      <div className="relative flex items-center py-6 justify-between px-[0.8rem] md:px-[3rem] lg:px-[5rem]">
+        <div className="absolute bottom-0 left-0 w-full bg-red-200 text-red-600 text-center font-[700] text-sm">Site under maintenance</div>
         <div className="flex gap-x-3 md:w-1/2 lg:w-[45%] justify-between items-center">
           <div className="flex gap-x-2 items-center">
             <RxHamburgerMenu
