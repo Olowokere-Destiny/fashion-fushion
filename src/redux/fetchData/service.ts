@@ -6,7 +6,7 @@ export const asosService = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL,
     prepareHeaders: (headers) => {
-      headers.set("X-RapidAPI-Key", key);
+      headers.set("x-rapidapi-key", key);
       headers.set("Content-Type", "application/json; charset=utf-8");
       return headers;
     },
@@ -14,21 +14,16 @@ export const asosService = createApi({
 
   endpoints: (builder) => ({
     autoComplete: builder.query({
-      query: (body:string) => `/products/auto-complete?q=${body}`,
+      query: (body:string) => `/autoSuggestion?query=${body}`
     }),
     search: builder.query({
-      query: (body:string) => `/products/search?q=${body}`,
+      query: (body:string) => `/getProductListBySearchTerm?searchTerm=${body}&limit=50`,
     }),
     showMore: builder.query({
-      query: (body: {query:string,page:number}) => `/products/search?q=${body.query}&page=${body.page}`,
+      query: (body: {query:string,offset:number}) => `/getProductListBySearchTerm?searchTerm=${body.query}&limit=50&offset=${body.offset}`,
     }),
     getProduct: builder.query({
-      query: (url:string) => ({
-        url: "/products/detail",
-        params: {
-          url
-        }
-      }),
+      query: (id:number) => `/getProductDetails?productId=${id}`,
     })
   }),
 });

@@ -15,7 +15,6 @@ function ItemCard({
   imageUrl,
   additionalImageUrls,
   prevPrice,
-  url,
   id,
 }: ItemCardProps) {
   const imageRef = useRef<HTMLImageElement>(null);
@@ -29,7 +28,6 @@ function ItemCard({
     imageRef.current!.src = "https://" + imageUrl;
   }
 
-  const encodedUrl = encodeURIComponent(url);
   const dispatch = useAppDispatch();
   const bag = useAppSelector((state) => state.state.bagState.items);
   const bagObj: ItemCardProps = {
@@ -37,7 +35,6 @@ function ItemCard({
     brandName,
     price,
     imageUrl,
-    url,
     id,
   };
   function addToFav(e: React.MouseEvent, i: number) {
@@ -93,7 +90,7 @@ function ItemCard({
   return (
     <div
       className="cursor-pointer"
-      onClick={() => router.push(`/search/${encodedUrl}`)}
+      onClick={() => router.push(`/search/${id}`)}
     >
       <div className="h-[200px] xlg:h-[300px] relative">
         <Image

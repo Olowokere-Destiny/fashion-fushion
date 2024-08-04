@@ -45,7 +45,7 @@ function SearchOverlay({ open, toggle }: Props) {
   async function autoComplete(body: string) {
     autoComp(body);
   }
-  const suggestions = results?.data.suggestionGroups[0].suggestions;
+  const suggestions = results?.data[0].suggestions
 
   useEffect(() => {
     const timeout = setTimeout(() => {

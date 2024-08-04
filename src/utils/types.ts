@@ -4,9 +4,7 @@ export type SuggestionItem = {
   searchTerm: string;
 };
 export interface AutoComplete {
-  data: {
-    suggestionGroups: [{ suggestions: SuggestionItem[] }];
-  };
+  data: [{ suggestions: SuggestionItem[] }]
 }
 // item card props and data props
 
@@ -16,7 +14,6 @@ export interface ItemCardProps {
   imageUrl: string;
   additionalImageUrls?: string;
   id: number;
-  url: string;
   prevPrice?: string | undefined;
   price: string;
 }
@@ -46,9 +43,8 @@ export interface ItemProps {
   };
 }
 export interface ItemCardData {
-  totalResultCount: number;
-  totalPages: number;
   data: {
+    itemCount: number;
     products: ItemProps[];
   };
 }
@@ -101,4 +97,5 @@ export interface SingleProductData {
     variants: { size: string }[];
   };
   message: string;
+  status?: boolean;
 }

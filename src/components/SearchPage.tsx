@@ -10,9 +10,7 @@ import { useEffect, useState, Suspense } from "react";
 import { ScaleLoader } from "react-spinners";
 
 function Searchpage() {
-  const [queryString, setQueryString] = useState<string | null>();
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalResCount, setTotalResCount] = useState(0);
+  const [queryString, setQueryString] = useState<string | null>(null);
   const searchParams = useSearchParams().get("q");
   useEffect(() => {
     setQueryString(searchParams);
@@ -20,40 +18,46 @@ function Searchpage() {
 
   const [results, setResults] = useState<ItemProps[]>([]);
   const { data, isFetching, isError } = useSearchQuery(queryString as string);
-  const [moreFn, { data: moreData, isFetching: moreFetching, isSuccess, isError: moreError }] =
-    useLazyShowMoreQuery();
-  const [page, setPage] = useState(1);
+  const [
+    moreFn,
+    {
+      data: moreProds,
+      isFetching: moreFetching,
+      isSuccess,
+      isError: moreError,
+    },
+  ] = useLazyShowMoreQuery();
+  const [limitReached, setLimitReached] = useState(false);
   const returnedData: ItemCardData = data;
+  const moreData: ItemCardData = moreProds;
 
   useEffect(() => {
-    setResults(returnedData?.data.products);
-    setTotalPages(returnedData?.totalPages);
-    setTotalResCount(returnedData?.totalResultCount);
-  }, [returnedData?.data.products]);
-
-  useEffect(() => {
-    document.title = `Search Results for  ${queryString}`;
-  }, [results]);
-
-  useEffect(()=>{
-    if (isSuccess) {
-      setResults((prev) => {
-        return [...prev, ...moreData?.data?.products];
-      });
-      setTotalPages(moreData?.totalPages);
-      setTotalResCount(moreData?.totalResultCount);
+    if (returnedData?.data?.products) {
+      setResults(returnedData.data.products);
     }
-  }, [moreData?.data])
+  }, [returnedData]);
 
-  async function showMore(query: string, page: number) {
-    moreFn({ query, page });
+  useEffect(() => {
+    if (results?.length >= returnedData?.data?.itemCount) {
+      setLimitReached(true);
+    } else {
+      setLimitReached(false);
+    }
+  }, [results, returnedData]);
+
+  useEffect(() => {
+    if (isSuccess && moreData?.data?.products) {
+      setResults((prev) => [...prev, ...moreData.data.products]);
+    }
+  }, [moreData, isSuccess]);
+
+  useEffect(() => {
+    document.title = `Search Results for ${queryString}`;
+  }, [queryString]);
+
+  async function showMore(query: string, offset: number) {
+    moreFn({ query, offset });
   }
-
-  useEffect(() => {
-    if (page > 1) {
-      showMore(queryString as string, page);
-    }
-  }, [page]);
 
   return (
     <Suspense>
@@ -66,7 +70,7 @@ function Searchpage() {
         {isError && (
           <div className="h-screen flex items-center justify-center">
             <p className="text-center text-[1rem] font-semibold text-red-500">
-              An error occured.
+              An error occurred.
             </p>
           </div>
         )}
@@ -78,12 +82,12 @@ function Searchpage() {
           </div>
         )}
         {Array.isArray(results) && results.length > 0 && (
-          <h1 className="my-6 text-center ">
+          <h1 className="my-6 text-center">
             Search results for:{" "}
             <span className="font-semibold text-[1rem] capitalize">
               {queryString}
             </span>{" "}
-            <span>{`(${totalResCount})`}</span>
+            <span>{`(${returnedData?.data?.itemCount})`}</span>
           </h1>
         )}
         {Array.isArray(results) && results.length > 0 && (
@@ -93,7 +97,6 @@ function Searchpage() {
                 <ItemCard
                   imageUrl={item.imageUrl}
                   id={item.id}
-                  url={item.url}
                   key={i}
                   additionalImageUrls={item.additionalImageUrls[0]}
                   name={item.name}
@@ -104,14 +107,12 @@ function Searchpage() {
               ))}
             </div>
 
-            {!moreFetching && !moreError && (
+            {!moreFetching && !moreError && !limitReached && (
               <div
                 onClick={() => {
-                  setPage((prev) => prev + 1);
+                  showMore(queryString as string, results.length);
                 }}
-                className={`${
-                  page === totalPages ? "hidden" : "block"
-                } my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer btn-effect`}
+                className="my-8 mx-auto px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer btn-effect"
               >
                 SHOW MORE
               </div>
@@ -124,9 +125,11 @@ function Searchpage() {
                 className="block mx-auto my-2"
               />
             )}
-            {
-              moreError && <p className="text-center text-[0.8rem] text-red-500 pt-3">An error occured. Please refresh the page.</p>
-            }
+            {moreError && (
+              <p className="text-center text-[0.8rem] text-red-500 pt-3">
+                An error occurred. Please refresh the page.
+              </p>
+            )}
           </div>
         )}
       </div>

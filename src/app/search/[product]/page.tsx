@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 
 interface Props {
   params: {
-    product: string;
+    product: number;
   };
 }
 
@@ -30,7 +30,7 @@ function Product({ params: { product } }: Props) {
     data: dataList,
     isFetching,
     isError,
-  } = useGetProductQuery(decodeURIComponent(product));
+  } = useGetProductQuery(product);
   const productData: SingleProductData = dataList;
   function returnQty() {
     if (quantity.value < 1 || isNaN(quantity.value)) {
@@ -103,13 +103,13 @@ function Product({ params: { product } }: Props) {
   };
 
   async function getSimilar(id: number) {
-    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/products/list-similarities?id=${id}`;
+    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/getYouMightAlsoLike?productId=${id}`;
     const options = {
       method: "GET",
       url,
       headers: {
-        "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
-        "X-RapidAPI-Host": "asos-com1.p.rapidapi.com",
+        "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY as string,
+        "x-rapidapi-host": "asos10.p.rapidapi.com",
       },
     };
 
@@ -132,6 +132,13 @@ function Product({ params: { product } }: Props) {
         <div className="h-screen flex items-center justify-center">
           <p className="text-center text-[1rem] font-semibold text-blue">
             Product details could not be retrieved. Check for another product.
+          </p>
+        </div>
+      )}
+      {productData?.status === false && (
+        <div className="h-screen flex items-center justify-center">
+          <p className="text-center text-[1rem] font-semibold text-blue">
+          The server is temporarily unable to service your request. (API issue) 🙃
           </p>
         </div>
       )}
@@ -241,7 +248,6 @@ function Product({ params: { product } }: Props) {
                 <div className="my-8 gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {similar?.data?.map((item, i) => (
                     <ItemCard
-                      url={item.url}
                       id={item.id}
                       key={i}
                       imageUrl={item.imageUrl}
