@@ -22,7 +22,6 @@ function Favourites() {
             <ItemCard
               imageUrl={item.imageUrl}
               id={item.id}
-              url={item.url}
               key={i}
               name={item.name}
               brandName={item.brandName}

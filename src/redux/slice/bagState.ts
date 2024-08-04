@@ -17,7 +17,6 @@ const bagState = createSlice({
         brandName: payload.brandName,
         imageUrl: payload.imageUrl,
         id: payload.id,
-        url: payload.url,
         price: payload?.price
       });
     },
