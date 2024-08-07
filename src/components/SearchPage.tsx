@@ -74,14 +74,14 @@ function Searchpage() {
             </p>
           </div>
         )}
-        {Array.isArray(results) && results.length < 1 && (
+        {Array.isArray(results) && results.length < 1 && !isFetching && (
           <div className="h-screen flex items-center justify-center">
             <p className="text-center text-[1rem] font-semibold text-red-500">
               No products found.
             </p>
           </div>
         )}
-        {Array.isArray(results) && results.length > 0 && (
+        {Array.isArray(results) && results.length > 0 && !isFetching && (
           <h1 className="my-6 text-center">
             Search results for:{" "}
             <span className="font-semibold text-[1rem] capitalize">
@@ -90,7 +90,7 @@ function Searchpage() {
             <span>{`(${returnedData?.data?.itemCount})`}</span>
           </h1>
         )}
-        {Array.isArray(results) && results.length > 0 && (
+        {Array.isArray(results) && results.length > 0 && !isFetching && (
           <div className="min-h-[60vh]">
             <div className="gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {results.map((item, i) => (
