@@ -26,7 +26,6 @@ function BagPage() {
                 key={i}
                 name={item.name}
                 brandName={item.brandName}
-                price={item.price}
                 qty={item.qty}
               />
             ))}

@@ -17,7 +17,6 @@ const cartState = createSlice({
         brandName: payload.brandName,
         imageUrl: payload.imageUrl,
         id: payload.id,
-        price: payload?.price,
         qty: payload.qty
       });
     },
