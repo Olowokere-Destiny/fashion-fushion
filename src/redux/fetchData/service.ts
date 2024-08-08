@@ -24,7 +24,7 @@ export const asosService = createApi({
     }),
     getProduct: builder.query({
       query: (id:number) => `/getProductDetails?productId=${id}`,
-    })
+    }),
   }),
 });
 

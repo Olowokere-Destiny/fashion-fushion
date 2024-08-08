@@ -8,7 +8,7 @@ import Image from "next/image";
 function Slide({
   photos,
 }: {
-  photos: { alternateText: string; url: string }[];
+  photos: { url: string }[];
 }) {
   const settings = {
     dots: false,
@@ -30,10 +30,10 @@ function Slide({
         return (
           <div key={i} className="max-h-[280px] md:max-h-[350px] lg:max-h-[400px] md:w-[35vw] lg:w-[25vw]">
             <Image
-              src={photo.url}
+              src={"https://" + photo.url}
               width={200}
               height={200}
-              alt={photo.alternateText}
+              alt="Product Image"
               unoptimized
               className="w-full h-full object-cover"
             />

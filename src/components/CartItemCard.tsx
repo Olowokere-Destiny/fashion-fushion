@@ -10,7 +10,6 @@ import stripeCheckout from "@/utils/stripeCheckout";
 function CartItemCard({
   name,
   brandName,
-  price,
   imageUrl,
   id,
   qty,
@@ -28,7 +27,7 @@ function CartItemCard({
           {qty}
         </div>
         <Image
-          src={imageUrl}
+          src={"https://"+imageUrl}
           width={100}
           height={100}
           alt="Product image"
@@ -51,10 +50,6 @@ function CartItemCard({
         </div>
         <p className="uppercase text-[0.7rem] font-[400]">{brandName}</p>
       </div>
-      <div className="flex items-center justify-between">
-        <p className={`${titillium.className} font-bold mt-2 text-blue`}>
-          {price}
-        </p>
         <button
           onClick={() => {
             stripeCheckout({
@@ -70,7 +65,6 @@ function CartItemCard({
         >
           PAY
         </button>
-      </div>
     </div>
   );
 }

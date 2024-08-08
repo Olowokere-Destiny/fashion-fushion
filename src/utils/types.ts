@@ -22,7 +22,6 @@ export interface CartCardProps {
   brandName: string;
   imageUrl: string;
   id: number;
-  price: string;
   qty: string;
 }
 
@@ -71,31 +70,22 @@ export interface SingleProductData {
   data: {
     id: number;
     name: string;
-    brandName: string;
+    brand: {
+      name: string;
+      description: string;
+    }
     gender: string;
-    description: {
-      brandDescription: string;
-      productDescription: string;
+    description: string;
+    media: {
+      images: {url: string}[]
+    }
+    info: {
+      aboutMe: string;
+      sizeAndFit: string;
       careInfo: string;
-    };
-    images: {
-      alternateText: string;
-      url: string;
-    }[];
-    price: [
-      {
-        productPrice: {
-          current: {
-            text: string;
-          };
-          previous: {
-            text: string;
-          };
-        };
-      }
-    ];
-    variants: { size: string }[];
+    }
+    variants: { displaySizeText: string }[];
   };
-  message: string;
+  message: {errorMessage: string}[] | string;
   status?: boolean;
 }

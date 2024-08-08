@@ -26,11 +26,7 @@ function Product({ params: { product } }: Props) {
   const [similar, setSimilar] = useState<SimilarDataProps>();
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.state.cartState.items);
-  const {
-    data: dataList,
-    isFetching,
-    isError,
-  } = useGetProductQuery(product);
+  const { data: dataList, isFetching, isError } = useGetProductQuery(product);
   const productData: SingleProductData = dataList;
   function returnQty() {
     if (quantity.value < 1 || isNaN(quantity.value)) {
@@ -41,9 +37,8 @@ function Product({ params: { product } }: Props) {
   }
   const cartObj: CartCardProps = {
     name: productData?.data?.name,
-    brandName: productData?.data?.brandName,
-    price: productData?.data?.price[0].productPrice.current.text,
-    imageUrl: productData?.data?.images[0].url,
+    brandName: productData?.data?.brand?.name,
+    imageUrl: productData?.data?.media?.images[0]?.url,
     id: productData?.data?.id,
     qty: returnQty().toString(),
   };
@@ -103,7 +98,7 @@ function Product({ params: { product } }: Props) {
   };
 
   async function getSimilar(id: number) {
-    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/getYouMightAlsoLike?productId=${id}`;
+    const url = `${process.env.NEXT_PUBLIC_RAPIDAPI_BASE_URL}/getPeopleAlsoBought?productId=${id}`;
     const options = {
       method: "GET",
       url,
@@ -117,31 +112,34 @@ function Product({ params: { product } }: Props) {
       .then((response) => response.json())
       .then((res) => setSimilar(res));
   }
+
   useEffect(() => {
-    if (productData?.data !== null && productData?.data?.id) {
-      getSimilar(productData?.data?.id);
-    }
     if (productData?.data?.name) {
       document.title = productData?.data.name;
+    }
+    if (productData?.data !== null && productData?.data?.id) {
+      getSimilar(productData?.data?.id);
     }
   }, [productData]);
 
   return (
     <div className="padding min-h-screen">
-      {productData?.data === null && (
+      {productData?.status === false && (
         <div className="h-screen flex items-center justify-center">
           <p className="text-center text-[1rem] font-semibold text-blue">
             Product details could not be retrieved. Check for another product.
           </p>
         </div>
       )}
-      {productData?.status === false && (
-        <div className="h-screen flex items-center justify-center">
-          <p className="text-center text-[1rem] font-semibold text-blue">
-          The server is temporarily unable to service your request. (API issue) 🙃
-          </p>
-        </div>
-      )}
+      {productData?.status === false &&
+        typeof productData?.message === "string" &&
+        productData?.message?.includes("Service Unavailable") && (
+          <div className="h-screen flex items-center justify-center">
+            <p className="text-center text-[1rem] font-semibold text-blue">
+              The server is temporarily unable to service your request.🙃
+            </p>
+          </div>
+        )}
       {isFetching && (
         <div className="h-screen flex items-center justify-center">
           <ScaleLoader color={"#024e82"} />
@@ -155,7 +153,7 @@ function Product({ params: { product } }: Props) {
         </div>
       )}
       {productData?.data && (
-        <>
+        <div>
           <div className="flex flex-col md:flex-row gap-y-6 md:gap-y-0 md:gap-x-10 lg:gap-x-12 py-4">
             <div className="relative">
               {productData?.data?.gender && (
@@ -163,7 +161,7 @@ function Product({ params: { product } }: Props) {
                   {productData?.data?.gender}
                 </div>
               )}
-              <Slide photos={productData?.data?.images} />
+              <Slide photos={productData?.data?.media?.images} />
             </div>
             <div>
               <h1
@@ -172,27 +170,19 @@ function Product({ params: { product } }: Props) {
                 {productData?.data?.name}
               </h1>
               <p className={`${arimo.className} uppercase text-[0.9rem] my-1`}>
-                {productData?.data?.brandName}
+                {productData?.data?.brand?.name}
               </p>
-              <div className="flex gap-x-3 items-center font-semibold text-[1.2rem]">
-                <p className="line-through text-gray-300">
-                  {productData?.data?.price[0].productPrice?.previous?.text}
-                </p>
-                <p className="text-blue">
-                  {productData?.data?.price[0].productPrice?.current?.text}
-                </p>
-              </div>
               <p
                 className="mt-4 lg:mt-7 text-[1rem] text-[#555]"
                 dangerouslySetInnerHTML={{
-                  __html: productData?.data?.description?.productDescription,
+                  __html: productData?.data?.description,
                 }}
               ></p>
               {productData?.data?.variants?.length > 0 && (
                 <select className="border-2 mx-auto md:mx-0 block border-[#024e82] p-2 cursor-pointer my-4 focus:outline-none">
                   {productData?.data?.variants?.map((size, i) => (
-                    <option value={size.size} key={i}>
-                      {size.size}
+                    <option value={size.displaySizeText} key={i}>
+                      {size.displaySizeText}
                     </option>
                   ))}
                 </select>
@@ -227,23 +217,37 @@ function Product({ params: { product } }: Props) {
               {renderButton(productData?.data?.id)}
             </div>
           </div>
+
           <div className="mt-6">
             <p
               className="text-[#555] text-[1rem]"
               dangerouslySetInnerHTML={{
-                __html: productData?.data?.description?.brandDescription,
+                __html: productData?.data?.brand?.description,
               }}
             ></p>
-            {productData?.data?.description?.careInfo !== undefined && (
-              <p className="text-[0.8rem] mt-3">
-                {`* ${productData?.data?.description?.careInfo}`}
-              </p>
-            )}
+            <p
+              className="text-[#555] text-[1rem]"
+              dangerouslySetInnerHTML={{
+                __html: productData?.data?.info?.aboutMe,
+              }}
+            ></p>
+            <p
+              className="text-[#555] text-[1rem]"
+              dangerouslySetInnerHTML={{
+                __html: productData?.data?.info?.sizeAndFit,
+              }}
+            ></p>
+            <p
+              className="text-[#555] text-[0.7rem] italic mt-4"
+              dangerouslySetInnerHTML={{
+                __html: "* " + productData?.data?.info?.careInfo,
+              }}
+            ></p>
 
             {similar?.data && similar?.data.length > 0 && (
               <div className="mt-10">
                 <h1 className="font-semibold text-[1.5rem] md:text-[1.7rem]">
-                  You might also like
+                  People also Bought
                 </h1>
                 <div className="my-8 gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {similar?.data?.map((item, i) => (
@@ -260,7 +264,7 @@ function Product({ params: { product } }: Props) {
               </div>
             )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
