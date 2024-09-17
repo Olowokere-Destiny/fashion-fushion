@@ -34,7 +34,9 @@ function SearchOverlay({ open, toggle }: Props) {
     if (listItem) {
       toSearch(listItem);
     } else {
-      toSearch(search.searchTerm);
+      if (search.searchTerm.trim().length > 2) {
+        toSearch(search.searchTerm);
+      }
     }
   };
 
@@ -45,7 +47,7 @@ function SearchOverlay({ open, toggle }: Props) {
   async function autoComplete(body: string) {
     autoComp(body);
   }
-  const suggestions = results?.data[0].suggestions
+  const suggestions = results?.data[0].suggestions;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -89,8 +91,16 @@ function SearchOverlay({ open, toggle }: Props) {
         </div>
       )}
 
-      {isFetching && <p className="pt-1 text-[0.9rem] text-blue text-center">Getting items...</p>}
-      {isError && <p className="pt-1 text-[0.9rem] text-red-500 text-center">An error occured.</p>}
+      {isFetching && (
+        <p className="pt-1 text-[0.9rem] text-blue text-center">
+          Getting items...
+        </p>
+      )}
+      {isError && (
+        <p className="pt-1 text-[0.9rem] text-red-500 text-center">
+          An error occured.
+        </p>
+      )}
 
       <div className="mx-auto md:w-5/6 p-4 overflow-auto no-scrollbar">
         {Array.isArray(suggestions) &&
