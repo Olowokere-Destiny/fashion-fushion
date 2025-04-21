@@ -1,22 +1,19 @@
-import { Stripe, loadStripe } from "@stripe/stripe-js";
-interface CheckoutProps {
-  lineItems: [{ price: string | undefined; quantity: number }];
-}
+import { CheckoutProps } from "./types";
+
 export default async function stripeCheckout({ lineItems }: CheckoutProps) {
-  let stripePromise: Promise<Stripe | null>;
-
-  function getStripe() {
-    if (!stripePromise) {
-      stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY!);
-    }
-    return stripePromise;
-  }
-
-  const stripe = await getStripe();
-  await stripe?.redirectToCheckout({
-    mode: "payment",
-    lineItems,
-    successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancelUrl: window.location.origin,
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ lineItems }),
   });
+
+  const data = await res.json();
+
+  if (data.url) {
+    window.location.href = data.url;
+  } else {
+    alert(data.error || "Unable to create checkout session");
+  }
 }

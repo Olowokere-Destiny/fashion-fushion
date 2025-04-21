@@ -17,7 +17,8 @@ const bagState = createSlice({
         brandName: payload.brandName,
         imageUrl: payload.imageUrl,
         id: payload.id,
-        price: payload?.price
+        displayPrice: payload?.displayPrice,
+        price: payload.price
       });
     },
     removeItem: (state, action: PayloadAction<number>) => {

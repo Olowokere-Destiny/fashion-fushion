@@ -17,10 +17,10 @@ export const asosService = createApi({
       query: (body:string) => `/autoSuggestion?query=${body}`
     }),
     search: builder.query({
-      query: (body:string) => `/getProductListBySearchTerm?searchTerm=${body}&limit=50`,
+      query: (body:string) => `/getProductListBySearchTerm?searchTerm=${body}&limit=50&currency=USD`,
     }),
     showMore: builder.query({
-      query: (body: {query:string,offset:number}) => `/getProductListBySearchTerm?searchTerm=${body.query}&limit=50&offset=${body.offset}`,
+      query: (body: {query:string,offset:number}) => `/getProductListBySearchTerm?searchTerm=${body.query}&limit=50&offset=${body.offset}&currency=USD`,
     }),
     getProduct: builder.query({
       query: (id:number) => `/getProductDetails?productId=${id}`,

@@ -74,7 +74,7 @@ function Searchpage() {
             </p>
           </div>
         )}
-        {Array.isArray(results) && results.length < 1 && !isFetching && (
+        {Array.isArray(results) && results.length === 0 && !isFetching && (
           <div className="h-screen flex items-center justify-center">
             <p className="text-center text-[1rem] font-semibold text-red-500">
               No products found.
@@ -102,7 +102,8 @@ function Searchpage() {
                   name={item.name}
                   brandName={item.brandName}
                   prevPrice={item.price.previous?.text}
-                  price={item.price?.current?.text}
+                  displayPrice={item.price?.current?.text}
+                  price={item.price?.current?.value}
                 />
               ))}
             </div>

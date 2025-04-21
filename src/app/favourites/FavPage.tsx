@@ -20,6 +20,7 @@ function Favourites() {
         <div className="min-h-screen gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {bag.map((item, i) => (
             <ItemCard
+              displayPrice={item.displayPrice}
               imageUrl={item.imageUrl}
               id={item.id}
               key={i}
@@ -31,12 +32,12 @@ function Favourites() {
         </div>
       )}
       {bag.length > 0 && (
-                <div
-                onClick={() => dispatch(clearItems())}
-                className="mt-4 mx-auto p-4 md:p-5 rounded-full text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
-              >
-                <AiOutlineDelete className="w-5 h-5 md:w-6 md:h-6" />
-              </div>
+        <div
+          onClick={() => dispatch(clearItems())}
+          className="mt-4 mx-auto p-4 md:p-5 rounded-full text-[0.8rem] text-white text-center bg-blue w-max cursor-pointer"
+        >
+          <AiOutlineDelete className="w-5 h-5 md:w-6 md:h-6" />
+        </div>
       )}
     </div>
   );

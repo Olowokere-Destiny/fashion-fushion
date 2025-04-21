@@ -21,6 +21,7 @@ function BagPage() {
           <div className="gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {cart.map((item, i) => (
               <CartItemCard
+                price={item.price}
                 imageUrl={item.imageUrl}
                 id={item.id}
                 key={i}

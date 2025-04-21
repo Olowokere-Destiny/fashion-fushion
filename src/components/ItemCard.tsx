@@ -11,11 +11,12 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 function ItemCard({
   name,
   brandName,
-  price,
+  displayPrice,
   imageUrl,
   additionalImageUrls,
   prevPrice,
   id,
+  price
 }: ItemCardProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const router = useRouter();
@@ -33,9 +34,10 @@ function ItemCard({
   const bagObj: ItemCardProps = {
     name,
     brandName,
-    price,
+    displayPrice,
     imageUrl,
     id,
+    price
   };
   function addToFav(e: React.MouseEvent, i: number) {
     e.stopPropagation();
@@ -90,7 +92,7 @@ function ItemCard({
   return (
     <div
       className="cursor-pointer"
-      onClick={() => router.push(`/search/${id}`)}
+      onClick={() => router.push(`/search/${id}?p=${price}`)}
     >
       <div className="h-[200px] xlg:h-[300px] relative">
         <Image
@@ -117,7 +119,7 @@ function ItemCard({
       </div>
       <div className="flex items-center gap-x-2">
         <p className={`${titillium.className} font-bold mt-2 text-blue`}>
-          {price}
+          {displayPrice}
         </p>
         {prevPrice && (
           <p

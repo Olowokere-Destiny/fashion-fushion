@@ -14,6 +14,7 @@ import { addItemCart, removeItemCart } from "@/redux/slice/cartState";
 import { MdClose } from "react-icons/md";
 import ItemCard from "@/components/ItemCard";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   params: {
@@ -25,6 +26,7 @@ function Product({ params: { product } }: Props) {
   const [quantity, setQuantity] = useState({ value: 1 });
   const [similar, setSimilar] = useState<SimilarDataProps>();
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
   const cart = useAppSelector((state) => state.state.cartState.items);
   const { data: dataList, isFetching, isError } = useGetProductQuery(product);
   const productData: SingleProductData = dataList;
@@ -35,15 +37,20 @@ function Product({ params: { product } }: Props) {
       return quantity.value;
     }
   }
+  const price = searchParams.get("p");
   const cartObj: CartCardProps = {
     name: productData?.data?.name,
     brandName: productData?.data?.brand?.name,
     imageUrl: productData?.data?.media?.images[0]?.url,
     id: productData?.data?.id,
+    price: Number(price) || 0,
     qty: returnQty().toString(),
   };
   function addToCart(e: React.MouseEvent) {
     e.stopPropagation();
+    if (!price) {
+      return;
+    }
     dispatch(addItemCart(cartObj));
   }
   function removeFromCart(e: React.MouseEvent, i: number) {
@@ -88,7 +95,11 @@ function Product({ params: { product } }: Props) {
       return (
         <div
           onClick={(e) => addToCart(e)}
-          className="flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center btn-effect w-max cursor-pointer"
+          className={`flex items-center gap-x-3 mt-5 mx-auto md:mx-0 px-4 py-3 md:px-6 md:py-4 text-[0.8rem] text-white text-center w-max ${
+            price
+              ? "btn-effect cursor-pointer"
+              : "cursor-not-allowed bg-gray-500 text-white"
+          }`}
         >
           <p>ADD TO BAG</p>
           <IoBagOutline className="w-4 h-4" />
@@ -117,9 +128,9 @@ function Product({ params: { product } }: Props) {
     if (productData?.data?.name) {
       document.title = productData?.data.name;
     }
-    if (productData?.data !== null && productData?.data?.id) {
-      getSimilar(productData?.data?.id);
-    }
+    // if (productData?.data !== null && productData?.data?.id) {
+    //   getSimilar(productData?.data?.id);
+    // }
   }, [productData]);
 
   return (
@@ -186,6 +197,13 @@ function Product({ params: { product } }: Props) {
                     </option>
                   ))}
                 </select>
+              )}
+              {price ? (
+                <p className="font-bold text-blue text-xl mb-3 text-center md:text-left tracking-wide">
+                  ${price}
+                </p>
+              ) : (
+                <p className="text-sm mb-2 text-center md:text-left">Invalid item price</p>
               )}
               <div className="flex space-x-1 items-center justify-center md:block">
                 <span>Quantity:</span>
@@ -257,7 +275,8 @@ function Product({ params: { product } }: Props) {
                       imageUrl={item.imageUrl}
                       name={item.name}
                       brandName={item.brandName}
-                      price={item.price?.current.text}
+                      displayPrice={item.price?.current.text}
+                      price={item.price?.current.value}
                     />
                   ))}
                 </div>

@@ -13,6 +13,7 @@ const cartState = createSlice({
     addItemCart: (state, action: PayloadAction<CartCardProps>) => {
       const {payload} = action;
       state.items.unshift({
+        price: payload.price,
         name: payload.name,
         brandName: payload.brandName,
         imageUrl: payload.imageUrl,

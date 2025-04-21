@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { titillium } from "@/utils/fontExports";
 import { useAppDispatch } from "@/redux/hooks";
 import { MdClose } from "react-icons/md";
 import { removeItemCart } from "@/redux/slice/cartState";
@@ -12,6 +11,7 @@ function CartItemCard({
   brandName,
   imageUrl,
   id,
+  price,
   qty,
 }: CartCardProps) {
   const dispatch = useAppDispatch();
@@ -55,8 +55,10 @@ function CartItemCard({
             stripeCheckout({
               lineItems: [
                 {
-                  price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
+                  name,
+                  price,
                   quantity: parseFloat(qty),
+                  image: ["https://"+imageUrl]
                 },
               ],
             });

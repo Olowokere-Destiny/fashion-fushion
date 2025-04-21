@@ -15,7 +15,8 @@ export interface ItemCardProps {
   additionalImageUrls?: string;
   id: number;
   prevPrice?: string | undefined;
-  price: string;
+  displayPrice: string;
+  price: number
 }
 export interface CartCardProps {
   name: string;
@@ -23,6 +24,11 @@ export interface CartCardProps {
   imageUrl: string;
   id: number;
   qty: string;
+  price: number;
+}
+
+export interface CheckoutProps {
+  lineItems: { name: string; price: number; quantity: number, image: string[] }[];
 }
 
 export interface ItemProps {
@@ -34,6 +40,7 @@ export interface ItemProps {
   url: string;
   price: {
     current: {
+      value: number;
       text: string;
     };
     previous: {
@@ -56,6 +63,7 @@ export interface SimilarDataProps {
     imageUrl: string;
     price: {
       current: {
+        value: any;
         text: string;
       };
       previous: {

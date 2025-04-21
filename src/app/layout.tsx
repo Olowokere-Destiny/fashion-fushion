@@ -21,7 +21,7 @@ export default function RootLayout({
   let persistor = persistStore(store);
   return (
     <html lang="en">
-      <body className={lato.className}>
+      <body className={`${lato.className} max-w-[1300px] mx-auto`}>
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <NavBar />
