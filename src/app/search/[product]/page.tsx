@@ -13,8 +13,9 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addItemCart, removeItemCart } from "@/redux/slice/cartState";
 import { MdClose } from "react-icons/md";
 import ItemCard from "@/components/ItemCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import useIsTopVisibleOnce from "@/utils/detectVisibility";
 
 interface Props {
   params: {
@@ -30,6 +31,10 @@ function Product({ params: { product } }: Props) {
   const cart = useAppSelector((state) => state.state.cartState.items);
   const { data: dataList, isFetching, isError } = useGetProductQuery(product);
   const productData: SingleProductData = dataList;
+
+  const divRef = useRef<HTMLDivElement>(null);
+  const divIsVisible = useIsTopVisibleOnce(divRef);
+
   function returnQty() {
     if (quantity.value < 1 || isNaN(quantity.value)) {
       return 1;
@@ -128,10 +133,10 @@ function Product({ params: { product } }: Props) {
     if (productData?.data?.name) {
       document.title = productData?.data.name;
     }
-    // if (productData?.data !== null && productData?.data?.id) {
-    //   getSimilar(productData?.data?.id);
-    // }
-  }, [productData]);
+    if (productData?.data !== null && productData?.data?.id && divIsVisible) {
+      getSimilar(productData?.data?.id);
+    }
+  }, [productData, divIsVisible]);
 
   return (
     <div className="padding min-h-screen">
@@ -263,27 +268,28 @@ function Product({ params: { product } }: Props) {
                 __html: "* " + productData?.data?.info?.careInfo,
               }}
             ></p>
-
-            {similar?.data && similar?.data.length > 0 && (
-              <div className="mt-10">
-                <h1 className="font-semibold text-[1.5rem] md:text-[1.7rem]">
-                  People also Bought
-                </h1>
-                <div className="my-8 gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {similar?.data?.map((item, i) => (
-                    <ItemCard
-                      id={item.id}
-                      key={i}
-                      imageUrl={item.imageUrl}
-                      name={item.name}
-                      brandName={item.brandName}
-                      displayPrice={item.price?.current.text}
-                      price={item.price?.current.value}
-                    />
-                  ))}
+            <div className="mt-10" ref={divRef}>
+              {similar?.data && similar?.data.length > 0 && (
+                <div>
+                  <h1 className="font-semibold text-[1.5rem] md:text-[1.7rem]">
+                    People also Bought
+                  </h1>
+                  <div className="my-8 gap-3 md:gap-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {similar?.data?.map((item, i) => (
+                      <ItemCard
+                        id={item.id}
+                        key={i}
+                        imageUrl={item.imageUrl}
+                        name={item.name}
+                        brandName={item.brandName}
+                        displayPrice={item.price?.current.text}
+                        price={item.price?.current.value}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
