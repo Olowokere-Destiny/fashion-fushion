@@ -22,13 +22,13 @@ export async function POST(req: NextRequest) {
             name: item.name || "Custom Item",
             images: item.image
           },
-          unit_amount: item.price * 100, // cents
+          unit_amount: Math.round(item.price * 100), // cents
         },
         quantity: item.quantity || 1,
       })),
       mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_PROD_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_PROD_URL}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_PROD_URL}/cancel`,
     });
 
     return NextResponse.json({ url: session.url });

@@ -43,7 +43,7 @@ function Product({ params: { product } }: Props) {
     brandName: productData?.data?.brand?.name,
     imageUrl: productData?.data?.media?.images[0]?.url,
     id: productData?.data?.id,
-    price: Number(price) || 0,
+    price: parseFloat(price || "0"),
     qty: returnQty().toString(),
   };
   function addToCart(e: React.MouseEvent) {
@@ -203,7 +203,9 @@ function Product({ params: { product } }: Props) {
                   ${price}
                 </p>
               ) : (
-                <p className="text-sm mb-2 text-center md:text-left">Invalid item price</p>
+                <p className="text-sm mb-2 text-center md:text-left">
+                  Invalid item price
+                </p>
               )}
               <div className="flex space-x-1 items-center justify-center md:block">
                 <span>Quantity:</span>

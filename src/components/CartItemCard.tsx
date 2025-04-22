@@ -5,6 +5,7 @@ import { MdClose } from "react-icons/md";
 import { removeItemCart } from "@/redux/slice/cartState";
 import { CartCardProps } from "@/utils/types";
 import stripeCheckout from "@/utils/stripeCheckout";
+import { titillium } from "@/utils/fontExports";
 
 function CartItemCard({
   name,
@@ -49,6 +50,9 @@ function CartItemCard({
           {name}
         </div>
         <p className="uppercase text-[0.7rem] font-[400]">{brandName}</p>
+        <p className={`${titillium.className} font-bold mt-2 text-blue`}>
+          ${price}
+        </p>
       </div>
         <button
           onClick={() => {

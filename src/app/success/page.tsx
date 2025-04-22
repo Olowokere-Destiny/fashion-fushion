@@ -2,11 +2,12 @@
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
-
+import { useSearchParams } from "next/navigation";
 function Success() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     useEffect(()=>{
-      const search = new URL(window?.location.href).searchParams.get("session_id")
+      const search = searchParams.get("session_id")
         if (!search) {
             router.replace("/")
         }
