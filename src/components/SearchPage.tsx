@@ -14,6 +14,7 @@ function Searchpage() {
   const searchParams = useSearchParams().get("q");
   useEffect(() => {
     setQueryString(searchParams);
+    setResults([]);
   }, [searchParams]);
 
   const [results, setResults] = useState<ItemProps[]>([]);
@@ -74,13 +75,16 @@ function Searchpage() {
             </p>
           </div>
         )}
-        {Array.isArray(results) && results.length === 0 && !isFetching && (
-          <div className="h-screen flex items-center justify-center">
-            <p className="text-center text-[1rem] font-semibold text-red-500">
-              No products found.
-            </p>
-          </div>
-        )}
+        {!isFetching &&
+          !isError &&
+          returnedData &&
+          returnedData?.data?.itemCount === 0 && (
+            <div className="h-screen flex items-center justify-center">
+              <p className="text-center text-[1rem] font-semibold text-red-500">
+                No products found.
+              </p>
+            </div>
+          )}
         {Array.isArray(results) && results.length > 0 && !isFetching && (
           <h1 className="my-6 text-center">
             Search results for:{" "}
